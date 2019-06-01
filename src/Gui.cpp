@@ -24,7 +24,7 @@
 #endif
 
 #include "const.h"
-#include "flasher.xpm"
+//#include "flasher.xpm"
 #include "icon.xpm"
 
 int
@@ -183,7 +183,7 @@ Gui::startup_info (void)
 	  settings->setCom (4);	//4 is index of usb in combobox
 	  tmp =
 	    tmp.sprintf (" %d%d.%d%d", status.ver_11, status.ver_12,
-			 status.ver_21, status.ver_22);
+                         status.ver_21, status.ver_22);
 	  console->print (tr ("Device firmware version:") + tmp);
 	  console->line ();
 	  return;

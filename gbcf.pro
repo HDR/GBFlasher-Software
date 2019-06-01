@@ -22,7 +22,6 @@ HEADERS += src/About.h \
            src/WriteFlashThread.h \
            src/WriteRamThread.h \
            src/about.xpm \
-           src/flasher.xpm \
            src/icon.xpm
 SOURCES += src/About.cpp \
            src/EraseThread.cpp \
@@ -61,3 +60,5 @@ config.path = ~/.config/GBCFProject
 config.files = GameBoyCartFlasher.conf
 INSTALLS += langpack exec config
 }
+
+OTHER_FILES +=

@@ -25,11 +25,11 @@ About::About (QWidget * parent):QDialog (parent)
   labels = new QVBoxLayout (box);
   name =
     new QLabel (tr ("GB Cart Flasher for Win8, Win8.1 & Win10 version ") +
-                VER + " (64-bit)", box);
+                VER, box);
   labels->addWidget (name);
   copy = new QLabel ("Copyright (c) 2005-2007 Kraku & Chroost", box);
   labels->addWidget (copy);
-  desc1 = new QLabel (tr ("This is a custom version"),
+  desc1 = new QLabel (tr ("This is a custom version, see <a href=https://github.com/MrHDR/GBFlasher-Software>https://github.com/MrHDR/GBFlasher-Software</a> for more info."),
 		      box);
   labels->addWidget (desc1);
   all->addWidget (box);

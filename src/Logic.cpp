@@ -132,7 +132,7 @@ Logic::read_status (AbstractPort * port, const char *port_name, char id, char mb
 	  flasher_stat->ver_12 = packet[2] % 16;
 	  flasher_stat->ver_21 = packet[3] / 16;
 	  flasher_stat->ver_22 = packet[3] % 16;
-	  flasher_stat->manufacturer_id = packet[4];
+          flasher_stat->manufacturer_id = packet[4];
 	  /* if code if not found - it remains unknown */
 	  strcpy (flasher_stat->manufacturer,
 		  tr ("Unknown manufacturer").toLocal8Bit ());

@@ -15,7 +15,7 @@ enum cchars
 #define FRAMESIZE 64
 #define AUTOSIZE -1
 #define PORTS_COUNT 4
-#define VER "1.2 - HDR Edition"
+#define VER "1.2"
 
 #define USB 0
 #define SERIAL 1
