@@ -113,13 +113,6 @@ Settings::Settings (QWidget * parent):QGroupBox (tr ("Settings"), parent)
   ram_combo->insertItem (2, "32 KB");
   ram_combo->insertItem (3, "128 KB");
   ram_combo->setCurrentIndex (1);
-  
-  lang_label = new QLabel (tr ("LANGUAGE:"), this);
-  labels->addWidget (lang_label);
-  lang_combo = new QComboBox (this);
-  combo_boxes->addWidget (lang_combo);
-  get_langs();
-
 
   auto_check = new QCheckBox (tr ("Check file size"), this);
   auto_check->setCheckState (Qt::Checked);

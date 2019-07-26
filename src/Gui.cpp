@@ -52,10 +52,6 @@ Gui::Gui (QWidget * parent):QWidget (parent)
   grid->addLayout (left, 0, 0);
   console = new Console (this);
 
-  //QPixmap Logo (gameboy);
-
-  //image->setPixmap (Logo);
-
   right->addWidget (console);
   progress = new QProgressBar (this);
   down->addWidget (progress);

@@ -28,7 +28,7 @@ enum cchars
 
 #ifdef Q_WS_WIN
 #define SYSTEM "WINDOWS"
-#define DEVELOPED "GCC 8.2.0 + QT 4.8.8"
+#define DEVELOPED "GCC 8.2.0 + QT 4.8.7"
 #endif
 
 /* return values and errors */
