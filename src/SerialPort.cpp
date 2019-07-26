@@ -6,7 +6,6 @@
 #include "SerialPort.h"
 
 extern "C"{
-#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
 /*

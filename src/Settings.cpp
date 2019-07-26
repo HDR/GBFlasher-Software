@@ -138,8 +138,6 @@ Settings::Settings (QWidget * parent):QGroupBox (tr ("Settings"), parent)
   connect (flash_combo, SIGNAL (activated (int)), this,
 	   SLOT (setFlash (int)));
   connect (ram_combo, SIGNAL (activated (int)), this, SLOT (setRam (int)));
-  connect (lang_combo, SIGNAL (activated (const QString &)), this,
-	   SLOT (setLang (const QString &)));
   connect (auto_check, SIGNAL (stateChanged (int)), this,
 	   SLOT (setAuto (int)));
 
@@ -281,26 +279,6 @@ Settings::get_langs() {
   settings.endGroup();
   lang_combo->setCurrentIndex(selectedIndex);
 
-}
-
-void
-Settings::setLang (const QString & lang)
-{
-  QSettings settings;
-  settings.beginGroup("lang");
-  QString langFileName = settings.value("selected_lang").toString();
-  QStringList keys = settings.childKeys();
-  for (int i = 0; i < keys.size(); ++i) {
-	if(lang == settings.value(keys.at(i)).toString())
-		langFileName = keys.at(i);
-  }
-  settings.endGroup();
-  settings.setValue ("selected_lang", langFileName);
-
-  QMessageBox::information (this, tr ("Change language"),
-			    tr
-			    ("After program restart language will be changed to: ")
-			    + lang, QMessageBox::Ok);
 }
 
 void

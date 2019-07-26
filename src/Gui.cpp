@@ -24,7 +24,7 @@
 #endif
 
 #include "const.h"
-//#include "flasher.xpm"
+//#include "horse.xpm"
 #include "icon.xpm"
 
 int
@@ -51,6 +51,9 @@ Gui::Gui (QWidget * parent):QWidget (parent)
   left->addStretch (1);
   grid->addLayout (left, 0, 0);
   console = new Console (this);
+
+  //QPixmap Logo (horse);
+  //image->setPixmap (Logo);
 
   right->addWidget (console);
   progress = new QProgressBar (this);

@@ -32,17 +32,17 @@ USBPort::open_port (QString /*port_name*/)
   if (Settings::speed == STANDARD)
     {
       if (ftdi_set_baudrate (&ftdic, 185000) < 0)
-	return FALSE;
+    return FALSE;
     }
   else if (Settings::speed == LOW)
     {
       if (ftdi_set_baudrate (&ftdic, 125000) < 0)
-	return FALSE;
+    return FALSE;
     }
   else if (Settings::speed == HIGH)
     {
       if (ftdi_set_baudrate (&ftdic, 375000) < 0)
-	return FALSE;
+    return FALSE;
     }
   else if (Settings::speed == ULTRA)
       {

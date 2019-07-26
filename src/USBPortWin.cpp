@@ -24,22 +24,22 @@ USBPortWin::USBPortWin()
 }
 
 
-bool USBPortWin::open_port (QString port_name)
+bool USBPortWin::open_port (QString)
 {
-	if(FT_Open(0,&ftHandle) != FT_OK)
-		return FALSE;
+    if(FT_Open(0,&ftHandle) != FT_OK)
+        return FALSE;
 /* choose speed */
     if(Settings::speed == STANDARD){
         if(FT_SetBaudRate(ftHandle,185000) != FT_OK)
-	   	   return FALSE;
+           return FALSE;
     }
     else if(Settings::speed == LOW){
         if(FT_SetBaudRate(ftHandle,125000) != FT_OK)
-	   	   return FALSE;
+           return FALSE;
     }
     else if(Settings::speed == HIGH){
         if(FT_SetBaudRate(ftHandle,375000) != FT_OK)
-	   	   return FALSE;
+           return FALSE;
     }
     else if(Settings::speed == ULTRA){
         if(FT_SetBaudRate(ftHandle,1500000) != FT_OK)

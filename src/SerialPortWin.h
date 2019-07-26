@@ -6,7 +6,6 @@
 #define _SERIALPORTWIN_H_
 #include <windows.h>
 #include "AbstractPort.h"
-#include <time.h>
 
  
 class SerialPortWin : public AbstractPort

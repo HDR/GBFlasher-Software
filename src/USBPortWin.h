@@ -7,7 +7,7 @@
 #include <windows.h>
 #include "AbstractPort.h"
 #include <ftd2xx.h>
-#include <time.h>
+#include <QTime>
 
  
 class USBPortWin : public AbstractPort
@@ -18,7 +18,7 @@ Q_OBJECT
 	bool opened;
 public:
 	USBPortWin();
-	bool open_port (QString port_name);
+    bool open_port (QString);
 	bool close_port ();
 	int receive_char ();
 	bool send_char (unsigned char character);

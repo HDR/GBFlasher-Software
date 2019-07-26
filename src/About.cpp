@@ -12,6 +12,7 @@ About::About (QWidget * parent):QDialog (parent)
   all = new QVBoxLayout (this);
 
   this->setWindowTitle (tr ("About"));
+  this->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
   QPixmap
   logo (about_xpm);

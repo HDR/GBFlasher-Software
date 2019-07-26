@@ -1,7 +1,3 @@
-/*****************************************************************************
-** SerialPortWin.cpp
-** Author: Kraku
-*****************************************************************************/
 #include "const.h"
 #include "AbstractPort.h"
 #include "SerialPortWin.h"
@@ -153,7 +149,7 @@ int SerialPortWin::receive_packet (unsigned char *packet)
                     else
                         bytesToReceive = Stat.cbInQue;
 
-                        ReadFile(hCommDev, &packet[PACKETSIZE-bytesLeft], bytesToReceive, &receivedCount, NULL);
+                    ReadFile(hCommDev, &packet[PACKETSIZE-bytesLeft], bytesToReceive, &receivedCount, NULL);
                         bytesLeft -= receivedCount;
                         tp = time(NULL);
                 }

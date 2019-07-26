@@ -6,7 +6,6 @@
 #define _USBPORT_H_
 #include "AbstractPort.h"
 #include <ftdi.h>
-#include <time.h>
 
 
 class USBPort:public AbstractPort

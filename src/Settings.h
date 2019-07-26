@@ -97,7 +97,6 @@ public:
   void setMbc (int mbc_nr);
   void setFlash (int index);
   void setRam (int index);
-  void setLang (const QString & lang);
   void setAuto (int state);
 signals:
   void refresh_ram_buttons ();
