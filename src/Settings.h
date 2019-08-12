@@ -44,6 +44,7 @@ public:
   static dap_t dap;
   static bool showbbl;
   static speed_type speed;
+  static bool darkmode;
   static QThread::Priority priority;
 
 

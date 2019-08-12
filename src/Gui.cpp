@@ -10,6 +10,9 @@
 #include "Settings.h"
 #include "Logic.h"
 #include "About.h"
+#include <string>
+#include "QApplication"
+#include "QTextStream"
 
 
 
@@ -24,7 +27,6 @@
 #endif
 
 #include "const.h"
-//#include "horse.xpm"
 #include "icon.xpm"
 
 int
@@ -33,7 +35,22 @@ int
 Gui::Gui (QWidget * parent):QWidget (parent)
 {
   QThread::currentThread ()->setPriority (QThread::NormalPriority);
-  path = ".";			//current startup dir
+  setWindowFlags( Qt::WindowTitleHint );
+  path = ".";			//current startup dir'
+  if (Settings::darkmode == TRUE)
+  {
+      QFile f(":qdarkstyle/style.qss");
+      if (!f.exists())
+      {
+          printf("Unable to set stylesheet, file not found\n");
+      }
+      else
+      {
+          f.open(QFile::ReadOnly | QFile::Text);
+          QTextStream ts(&f);
+          qApp->setStyleSheet(ts.readAll());
+      }
+  }
   this->setWindowIcon (QIcon (QPixmap (icon)));
   this->setWindowTitle (tr ("GB Cart Flasher version ") + VER);
   grid = new QGridLayout (this);
@@ -51,10 +68,6 @@ Gui::Gui (QWidget * parent):QWidget (parent)
   left->addStretch (1);
   grid->addLayout (left, 0, 0);
   console = new Console (this);
-
-  //QPixmap Logo (horse);
-  //image->setPixmap (Logo);
-
   right->addWidget (console);
   progress = new QProgressBar (this);
   down->addWidget (progress);
@@ -108,15 +121,15 @@ Gui::Gui (QWidget * parent):QWidget (parent)
   connect (about_btn, SIGNAL (clicked ()), this, SLOT (about ()));
 
   connect (thread_WFLA, SIGNAL (set_progress (int, int)), this,
-	   SLOT (setProgress (int, int)));
+       SLOT (setProgress (int, int)));
   connect (thread_RFLA, SIGNAL (set_progress (int, int)), this,
-	   SLOT (setProgress (int, int)));
+       SLOT (setProgress (int, int)));
   connect (thread_E, SIGNAL (set_progress (int, int)), this,
-	   SLOT (setProgress (int, int)));
+       SLOT (setProgress (int, int)));
   connect (thread_RRAM, SIGNAL (set_progress (int, int)), this,
-	   SLOT (setProgress (int, int)));
+       SLOT (setProgress (int, int)));
   connect (thread_WRAM, SIGNAL (set_progress (int, int)), this,
-	   SLOT (setProgress (int, int)));
+       SLOT (setProgress (int, int)));
 
 
   connect (thread_RFLA, SIGNAL (error (int)), this, SLOT (print_error (int)));

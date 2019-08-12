@@ -7,8 +7,6 @@
 #include <windows.h>
 #include "AbstractPort.h"
 #include <ftd2xx.h>
-#include <QTime>
-
  
 class USBPortWin : public AbstractPort
 {

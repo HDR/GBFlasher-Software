@@ -21,6 +21,8 @@ bool
   Settings::showbbl = FALSE;
 speed_type
   Settings::speed = STANDARD;
+bool
+  Settings::darkmode = FALSE;
 QThread::Priority Settings::priority = QThread::NormalPriority;
 
 Settings::Settings (QWidget * parent):QGroupBox (tr ("Settings"), parent)

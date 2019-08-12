@@ -6,6 +6,8 @@ INCLUDEPATH += .
 
 QMAKE_LFLAGS += -static
 
+RESOURCES += qdarkstyle/style.qrc
+
 # Input
 HEADERS += src/About.h \
            src/AbstractPort.h \
@@ -49,3 +51,6 @@ exec.path = /usr/bin
 exec.files = gbcflsh
 INSTALLS += exec config
 }
+
+DISTFILES += \
+    src/icon.xpm

@@ -11,7 +11,7 @@
 void
 EraseThread::run ()
 {
-  time_t tp, t0;		/* time for erase */
+  time_t tp;		/* time for erase */
   unsigned short crc16;
   unsigned char packet[PACKETSIZE];
 /* filling single erase packet */
@@ -35,7 +35,7 @@ EraseThread::run ()
       return;
     }
 
-  t0 = tp = time (NULL);
+  tp = time (NULL);
   do
     {
       /* end of thread - operation canceled */

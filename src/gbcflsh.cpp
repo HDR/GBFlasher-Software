@@ -43,6 +43,13 @@ parse_params (int /*argc*/, char *argv[])
 	Settings::speed = HIGH;
       if (strcmp (*argv, "-ultraspeed") == 0)
           Settings::speed = ULTRA;
+/*
+ * Appearance settings
+ */
+      if (strcmp (*argv, "-darkmode") == 0)
+    Settings::darkmode = TRUE;
+
+
 /* 
  * communication threads prioryty are used when communication 
  * or gui is freezing
