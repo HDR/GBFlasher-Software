@@ -191,7 +191,7 @@ Gui::startup_info (void)
 	  TRUE)
 	{
 	  QString tmp;
-	  console->print (tr ("Device connected to: USB"));
+      console->print (tr ("Device connected via: USB"));
 	  settings->setCom (4);	//4 is index of usb in combobox
 	  tmp =
 	    tmp.sprintf (" %d%d.%d%d", status.ver_11, status.ver_12,
@@ -221,7 +221,7 @@ Gui::startup_info (void)
       else
 	{
 	  QString tmp;
-	  console->print (tr ("Device connected to: ") +
+      console->print (tr ("Device connected via: ") +
 			  settings->getCom (which_port));
 	  settings->setCom (which_port);
 	  tmp =

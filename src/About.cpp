@@ -32,6 +32,7 @@ About::About (QWidget * parent):QDialog (parent)
   labels->addWidget (copy);
   desc1 = new QLabel (tr ("This is a custom version, see <a href=https://github.com/MrHDR/GBFlasher-Software>https://github.com/MrHDR/GBFlasher-Software</a> for more info."),
 		      box);
+  desc1->setOpenExternalLinks(true);
   labels->addWidget (desc1);
   all->addWidget (box);
   ok_btn = new QPushButton (tr ("Close"), this);

@@ -266,24 +266,6 @@ Settings::flash_types (int type)
 }
 
 void
-Settings::get_langs() {
-  QSettings settings;
-  int selectedIndex = 0;
-  QString selectedLang = settings.value("selected_lang").toString();
-  settings.beginGroup("lang");
-  QStringList keys = settings.childKeys();
-
-  for (int i = 0; i < keys.size(); ++i) {
-  	lang_combo->insertItem(i,settings.value(keys.at(i)).toString());
-	if(selectedLang == keys.at(i))
-		selectedIndex = i;
-  }
-  settings.endGroup();
-  lang_combo->setCurrentIndex(selectedIndex);
-
-}
-
-void
 Settings::setAuto (int state)
 {
   if (state == Qt::Checked)

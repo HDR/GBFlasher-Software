@@ -25,12 +25,10 @@ class Settings:public QGroupBox
   QComboBox *mbc_combo;
   QComboBox *flash_combo;
   QComboBox *ram_combo;
-  QComboBox *lang_combo;
   QLabel *com_label;
   QLabel *mbc_label;
   QLabel *flash_label;
   QLabel *ram_label;
-  QLabel *lang_label;
   QCheckBox *auto_check;
   QVBoxLayout *labels, *combo_boxes;
   QHBoxLayout *north, *down;
@@ -91,7 +89,6 @@ public:
 
   void ram_types (int type);
   void flash_types (int type);
-  void get_langs();
 
   public slots:
   void setCom (int index);
