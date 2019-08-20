@@ -1,8 +1,3 @@
-/*****************************************************************************
-** Logic.cpp - Source file containing all utility functions used in 
-** communication process by Threads and Gui
-** Author: Kraku
-*****************************************************************************/
 #include "Logic.h"
 #include "const.h"
 #include "AbstractPort.h"

@@ -1,7 +1,3 @@
-/*****************************************************************************
-** WriteFlashThread.cpp
-** Author: Kraku
-*****************************************************************************/
 #include "WriteFlashThread.h"
 #include "Settings.h"
 #include "Logic.h"

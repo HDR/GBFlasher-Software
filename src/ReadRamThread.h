@@ -1,7 +1,3 @@
-/*****************************************************************************
-** ReadRamThread.h
-** Author: Kraku
-*****************************************************************************/
 #ifndef FL_READRAMTHREAD_H_
 #define FL_READRAMTHREAD_H_
 #include <QThread>

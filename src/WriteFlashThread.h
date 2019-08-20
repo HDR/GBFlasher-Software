@@ -1,7 +1,3 @@
-/*****************************************************************************
-** WriteFlashThread.h
-** Author: Kraku
-*****************************************************************************/
 #ifndef FL_WRITEFLASHTHREAD_H_
 #define FL_WRITEFLASHTHREAD_H_
 #include <QThread>

@@ -1,8 +1,3 @@
-/*****************************************************************************
-** Console.h - header of Console used to print infos from other
-** modules
-** Author: Kraku
-*****************************************************************************/
 #ifndef FL_CONSOLE_H_
 #define FL_CONSOLE_H_
 

@@ -1,7 +1,3 @@
-/*****************************************************************************
-** USBPort.h - USB driver for Linux based on libftdi
-** Author: Kraku
-*****************************************************************************/
 #ifndef FL_USBPORT_H_
 #define FL_USBPORT_H_
 #include "AbstractPort.h"

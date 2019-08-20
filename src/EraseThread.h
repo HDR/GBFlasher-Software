@@ -1,8 +1,3 @@
-/*****************************************************************************
-** EraseThread.h - Header file of thread responsible for process of 
-** FLASH and RAM erase
-** Author: Kraku
-*****************************************************************************/
 #ifndef FL_ERASETHREAD_H_
 #define FL_ERASETHREAD_H_
 #include <QThread>

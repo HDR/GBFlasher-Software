@@ -1,7 +1,3 @@
-/*****************************************************************************
-** gbcflsh.cpp - Main source file, starts application, parse args
-** Author: Kraku
-*****************************************************************************/
 #include <QtWidgets/QApplication>
 #include <QTranslator>
 #include <QSettings>

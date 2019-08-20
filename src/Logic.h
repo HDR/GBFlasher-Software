@@ -1,7 +1,3 @@
-/*****************************************************************************
-** Logic.h - Header file for utility functions used in communication proces
-** Author: Kraku
-*****************************************************************************/
 #ifndef FL_LOGIC_H_
 #define FL_LOGIC_H_
 #include <QObject>

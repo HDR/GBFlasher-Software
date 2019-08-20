@@ -1,7 +1,3 @@
-/*****************************************************************************
-** WriteRamThread.h
-** Author: Kraku
-*****************************************************************************/
 #ifndef FL_WRITERAMTHREAD_H_
 #define FL_WRITERAMTHREAD_H_
 #include <QThread>

@@ -1,7 +1,3 @@
-/*****************************************************************************
-** ReadFlashThread.h 
-** Author: Kraku
-*****************************************************************************/
 #ifndef FL_READFLASHTHREAD_H_
 #define FL_READFLASHTHREAD_H_
 #include <QThread>

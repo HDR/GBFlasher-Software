@@ -1,7 +1,3 @@
-/*****************************************************************************
-** Gui.cpp - main class of GUI (Main Window)
-** Author: Kraku
-*****************************************************************************/
 #include <QtWidgets/QFileDialog>
 #include <QPixmap>
 #include <QtWidgets/QMessageBox>
