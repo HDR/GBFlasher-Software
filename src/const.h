@@ -2,8 +2,8 @@
 ** const.h - definitions of constants used in program
 ** Author: Kraku
 *****************************************************************************/
-#ifndef _CONST_H_
-#define _CONST_H_
+#ifndef FL_CONST_H_
+#define FL_CONST_H_
 
 /* control characters */
 enum cchars

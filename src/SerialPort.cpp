@@ -12,7 +12,7 @@ extern "C"{
  * Header files for RS232C support under Linux
  */
 #include <unistd.h>
-#include <termios.h>
+#include "termios.h"
 #include <fcntl.h>
 }
 

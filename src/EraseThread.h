@@ -3,8 +3,8 @@
 ** FLASH and RAM erase
 ** Author: Kraku
 *****************************************************************************/
-#ifndef _ERASETHREAD_H_
-#define _ERASETHREAD_H_
+#ifndef FL_ERASETHREAD_H_
+#define FL_ERASETHREAD_H_
 #include <QThread>
 #include "AbstractPort.h"
 #include "Logic.h"

@@ -3,8 +3,8 @@
 ** modules
 ** Author: Kraku
 *****************************************************************************/
-#ifndef _CONSOLE_H_
-#define _CONSOLE_H_
+#ifndef FL_CONSOLE_H_
+#define FL_CONSOLE_H_
 
 #include <QTextEdit>
 #include <QString>

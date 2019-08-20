@@ -2,8 +2,8 @@
 ** About.h
 ** Author: Kraku
 *****************************************************************************/
-#ifndef _ABOUT_H_
-#define _ABOUT_H_
+#ifndef FL_ABOUT_H_
+#define FL_ABOUT_H_
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QPushButton>
 #include <QPixmap>
@@ -19,7 +19,7 @@ class About:public QDialog
   QLabel *name, *copy, *desc1, *desc2, *warning, *translator;
   QVBoxLayout *labels;
 public:
-    About (QWidget * parent = 0);
+    About (QWidget * parent = nullptr);
 };
 
 #endif

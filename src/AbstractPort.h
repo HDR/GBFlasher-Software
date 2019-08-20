@@ -2,8 +2,8 @@
 ** AbstractPort.h
 ** Author: Kraku
 *****************************************************************************/
-#ifndef _ABSTRACTPORT_H_
-#define _ABSTRACTPORT_H_
+#ifndef FL_ABSTRACTPORT_H_
+#define FL_ABSTRACTPORT_H_
 #include <QObject>
 #include <QString>
 
@@ -18,7 +18,7 @@ Q_OBJECT public:
   virtual int send_packet (unsigned char *packet) = 0;
     virtual ~AbstractPort ()
   {
-  };
+  }
   virtual bool isOpen () = 0;
 signals:
   void error (int err);

@@ -85,7 +85,7 @@ bool USBPortWin::send_char (unsigned char character)
 
 int USBPortWin::receive_char (void)
 {
-	time_t tp = time(0);
+    time_t tp = time(nullptr);
     unsigned char character;
 	DWORD cbInQue = 0;
     DWORD recivedCount=0;
@@ -97,7 +97,7 @@ int USBPortWin::receive_char (void)
         if(recivedCount != 0)
             break;
         FT_GetQueueStatus(ftHandle,&cbInQue);
-    }while(time(0) - tp < SLEEPTIME);
+    }while(time(nullptr) - tp < SLEEPTIME);
 
     if (recivedCount == 0)
         return TIMEOUT;
@@ -110,7 +110,7 @@ int USBPortWin::receive_char (void)
 
 int USBPortWin::receive_packet (unsigned char *packet)
 {
-	time_t tp = time(0);
+    time_t tp = time(nullptr);
     DWORD recivedCount=0, bytesToReceive;
 	DWORD cbInQue = 0;
     FT_GetQueueStatus(ftHandle,&cbInQue);
@@ -119,7 +119,7 @@ int USBPortWin::receive_packet (unsigned char *packet)
         if (cbInQue > 0)
             FT_Read(ftHandle, packet, 1, &recivedCount);
         FT_GetQueueStatus(ftHandle,&cbInQue);
-    } while(time(0) - tp < SLEEPTIME && recivedCount == 0);
+    } while(time(nullptr) - tp < SLEEPTIME && recivedCount == 0);
     if (recivedCount == 0)
         return TIMEOUT;
     else
@@ -136,7 +136,7 @@ int USBPortWin::receive_packet (unsigned char *packet)
         else
         {
             unsigned int bytesLeft = PACKETSIZE-1;
-            tp = time(0);
+            tp = time(nullptr);
             recivedCount = 0;
             FT_GetQueueStatus(ftHandle,&cbInQue);
             do
@@ -150,12 +150,12 @@ int USBPortWin::receive_packet (unsigned char *packet)
 
 						FT_Read(ftHandle, &packet[PACKETSIZE-bytesLeft], bytesToReceive, &recivedCount);
                         bytesLeft -= recivedCount;
-                        tp = time(0);
+                        tp = time(nullptr);
                 }
                 
                    
                 FT_GetQueueStatus(ftHandle,&cbInQue);
-            }while(time(0) - tp < SLEEPTIME && bytesLeft != 0);
+            }while(time(nullptr) - tp < SLEEPTIME && bytesLeft != 0);
 
             if(bytesLeft > 0)
                 return TIMEOUT;

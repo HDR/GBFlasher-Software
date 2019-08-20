@@ -23,7 +23,7 @@ ReadFlashThread::run ()
   cfg.dap = Settings::dap;
   cfg.page_count = page_count;
 
-  if (file == 0)
+  if (file == nullptr)
     {
       port->close_port ();
       emit error (FILEERROR_O);

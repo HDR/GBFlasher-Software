@@ -2,8 +2,8 @@
 ** Logic.h - Header file for utility functions used in communication proces
 ** Author: Kraku
 *****************************************************************************/
-#ifndef _LOGIC_H_
-#define _LOGIC_H_
+#ifndef FL_LOGIC_H_
+#define FL_LOGIC_H_
 #include <QObject>
 #include "const.h"
 #include "AbstractPort.h"
@@ -77,7 +77,7 @@ Q_OBJECT public:
 				unsigned char data[FRAMESIZE],
 				char packet_type, unsigned char packet_number,
 				int page_number);
-    Logic (QObject * parent = 0);
+    Logic (QObject * parent = nullptr);
 /* query device for status of itself and cart, fills status_t struct */
   static int read_status (AbstractPort * port, const char *name_portu, char id,
 			  char mbc, char alg, status_t * flasher_stat);

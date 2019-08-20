@@ -25,7 +25,9 @@ HEADERS += src/About.h \
            src/WriteRamThread.h \
            src/about.xpm \
            src/ftd2xx.h \
-           src/icon.xpm
+           src/ftdi.h \
+           src/icon.xpm \
+           src/termios.h
 SOURCES += src/About.cpp \
            src/EraseThread.cpp \
            src/gbcflsh.cpp \

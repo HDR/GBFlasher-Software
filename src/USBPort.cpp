@@ -5,7 +5,7 @@
 #include "const.h"
 #include "USBPort.h"
 #include "Settings.h"
-#include <ftdi.h>
+#include "ftdi.h"
 #include <iostream>
 extern "C"
 {

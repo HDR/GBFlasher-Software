@@ -25,7 +25,7 @@ ReadRamThread::run ()
   if (_2k)			/* if only 2kB to process */
     page_count = 1;		/* treat as 8kB - one page of RAM */
 
-  if (file == 0)
+  if (file == nullptr)
     {
       port->close_port ();
       emit error (FILEERROR_O);

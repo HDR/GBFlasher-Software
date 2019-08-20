@@ -50,7 +50,7 @@ class Gui:public QWidget
   WriteRamThread * thread_WRAM;
 
 public:
-    Gui (QWidget * parent = 0);
+    Gui (QWidget * parent = nullptr);
   static int port_type;
 
 

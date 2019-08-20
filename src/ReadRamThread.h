@@ -2,8 +2,8 @@
 ** ReadRamThread.h
 ** Author: Kraku
 *****************************************************************************/
-#ifndef _READRAMTHREAD_H_
-#define _READRAMTHREAD_H_
+#ifndef FL_READRAMTHREAD_H_
+#define FL_READRAMTHREAD_H_
 #include <QThread>
 #include "AbstractPort.h"
 #include "Logic.h"

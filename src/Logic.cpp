@@ -97,7 +97,7 @@ int
 Logic::read_status (AbstractPort * port, const char *port_name, char id, char mbc,
 		    char algorythm, status_t * flasher_stat)
 {
-  assert (port != 0);
+  assert (port != nullptr);
   if (port->open_port (port_name) == false)
     return PORT_ERROR;
 

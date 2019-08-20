@@ -170,9 +170,8 @@ Gui::create_port (void)
 #ifdef Q_OS_UNIX
       return new SerialPort;
 #endif
-      break;
     }
-  return 0;
+  return nullptr;
 }
 
 void
@@ -352,7 +351,7 @@ Gui::write_flash (void)
   path = Logic::get_path (file_name);
   if (file_name != "")
     {
-      long bytes_count;
+      long bytesCount;
       short kilobytes_count;
       thread_WFLA->port = create_port ();
       if (thread_WFLA->port->open_port (settings->getCom().toLatin1()) == false)
@@ -367,13 +366,13 @@ Gui::write_flash (void)
 
       if (settings->isAuto () == false)
 	{
-	  bytes_count = Logic::file_size (thread_WFLA->file);
+      bytesCount = Logic::file_size (thread_WFLA->file);
 	  thread_WFLA->page_count =
-	    (short) ((bytes_count % 16384L) ? (bytes_count / 16384 +
-					       1) : (bytes_count / 16384L));
+        (short) ((bytesCount % 16384L) ? (bytesCount / 16384 +
+                           1) : (bytesCount / 16384L));
 	  kilobytes_count =
-	    (short) ((bytes_count % 1024L) ? (bytes_count / 1024 +
-					      1) : (bytes_count / 1024L));
+        (short) ((bytesCount % 1024L) ? (bytesCount / 1024 +
+                          1) : (bytesCount / 1024L));
 
 	}
       else if ((kilobytes_count = Logic::flash_file_size (thread_WFLA->file))
@@ -537,26 +536,26 @@ Gui::erase_ram (void)
       print_error (PORT_ERROR);
       return;
     }
-  int window_count;
+  int windowCount;
   thread_E->mbc = settings->getMbc ();
   thread_E->mem = ERAM;
   switch (settings->getRam ())
     {
     case 2:
     case 8:
-      window_count = 0;
+      windowCount = 0;
       break;
     case 32:
-      window_count = 3;
+      windowCount = 3;
       break;
     case 128:
-      window_count = 15;
+      windowCount = 15;
       break;
     default:
-      window_count = 15;
+      windowCount = 15;
     }
 
-  thread_E->par = window_count;
+  thread_E->par = windowCount;
   thread_E->dap = Settings::dap;
   setEnabledButtons (false);
   console->print (tr ("Erasing RAM memory..."));

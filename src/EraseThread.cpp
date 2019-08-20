@@ -35,7 +35,7 @@ EraseThread::run ()
       return;
     }
 
-  tp = time (0);
+  tp = time (nullptr);
   do
     {
       /* end of thread - operation canceled */
@@ -52,10 +52,10 @@ EraseThread::run ()
 	  emit error (true);
 	  return;
 	}
-      if (time (0) != tp)
-	emit set_progress (time (0) - tp, DELTIME);
+      if (time (nullptr) != tp)
+    emit set_progress (time (nullptr) - tp, DELTIME);
     }
-  while (time (0) - tp < DELTIME);
+  while (time (nullptr) - tp < DELTIME);
   /* wait for erase DELTIME sec.
    * hardware independent!
    */
