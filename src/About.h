@@ -4,12 +4,12 @@
 *****************************************************************************/
 #ifndef _ABOUT_H_
 #define _ABOUT_H_
-#include <QDialog>
-#include <QPushButton>
+#include <QtWidgets/QDialog>
+#include <QtWidgets/QPushButton>
 #include <QPixmap>
-#include <QLabel>
-#include <QBoxLayout>
-#include <QGroupBox>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QBoxLayout>
+#include <QtWidgets/QGroupBox>
 class About:public QDialog
 {
   Q_OBJECT QPushButton * ok_btn;

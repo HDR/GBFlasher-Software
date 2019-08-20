@@ -22,7 +22,7 @@ public:
 /* main point of thread  */
   virtual void run ();
 public slots:
-  void canceled (void) { end = TRUE; }
+  void canceled (void) { end = true; }
 signals:
   void set_progress (int ile, int max);
   void error (int err);

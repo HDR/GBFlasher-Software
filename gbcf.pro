@@ -4,6 +4,8 @@ DEPENDPATH += .
 INCLUDEPATH += .
 #DESTDIR = build
 
+QT += widgets
+
 QMAKE_LFLAGS += -static
 
 RESOURCES += qdarkstyle/style.qrc
@@ -22,6 +24,7 @@ HEADERS += src/About.h \
            src/WriteFlashThread.h \
            src/WriteRamThread.h \
            src/about.xpm \
+           src/ftd2xx.h \
            src/icon.xpm
 SOURCES += src/About.cpp \
            src/EraseThread.cpp \
@@ -39,7 +42,7 @@ SOURCES += src/SerialPortWin.cpp \
            src/USBPortWin.cpp
 HEADERS += src/SerialPortWin.h \
            src/USBPortWin.h
-LIBS += -lftd2xx \
+LIBS += -L"D:\OneDrive\Dokumenter\GitHub\GBFlasher-Software-QT5\lib" "D:\OneDrive\Dokumenter\GitHub\GBFlasher-Software-QT5\lib\ftd2xx.lib" \
 }
 unix {
 SOURCES += src/SerialPort.cpp \
@@ -53,4 +56,5 @@ INSTALLS += exec config
 }
 
 DISTFILES += \
+    lib/ftd2xx.lib \
     src/icon.xpm

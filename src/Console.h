@@ -17,7 +17,7 @@ public:
   Console (QWidget * parent):QTextEdit (parent)
   {
     this->setMinimumWidth (400);
-    this->setReadOnly (TRUE);
+    this->setReadOnly (true);
     QPalette palette;
       palette.setColor (QPalette::Base, QColor (0, 0, 0));
       this->setPalette (palette);
@@ -33,7 +33,7 @@ public:
 
   void line ()
   {
-#ifdef Q_WS_X11
+#ifdef Q_OS_UNIX
     print ("<br>");
 #else
     print ("<hr><br>");

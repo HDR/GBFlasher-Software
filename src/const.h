@@ -21,12 +21,12 @@ enum cchars
 #define SERIAL 1
 
 /* strings for version information */
-#ifdef Q_WS_X11
+#ifdef Q_OS_UNIX
 #define SYSTEM "LINUX"
 #define DEVELOPED "GCC 4.1.1 + QT 4.3.2"
 #endif
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #define SYSTEM "WINDOWS"
 #define DEVELOPED "GCC 8.2.0 + QT 4.8.7"
 #endif

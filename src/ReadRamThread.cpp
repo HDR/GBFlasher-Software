@@ -12,7 +12,7 @@ void
 ReadRamThread::run ()
 {
 
-  end = FALSE;
+  end = false;
   unsigned char packet[72], data[2048];	/* 2kB cart is avilable */
   int n, data_type = 0x00, recived = 0, retries =
     0, page_number, packet_number, prv_count = 0;
@@ -25,7 +25,7 @@ ReadRamThread::run ()
   if (_2k)			/* if only 2kB to process */
     page_count = 1;		/* treat as 8kB - one page of RAM */
 
-  if (file == NULL)
+  if (file == 0)
     {
       port->close_port ();
       emit error (FILEERROR_O);
@@ -34,7 +34,7 @@ ReadRamThread::run ()
 
   do
     {
-      if (Logic::send_start_packet (port, cfg) == FALSE)
+      if (Logic::send_start_packet (port, cfg) == false)
 	{
 	  port->close_port ();
 	  fclose (file);
@@ -113,7 +113,7 @@ ReadRamThread::run ()
 		  port->send_char (END);
 		  port->close_port ();
 		  fclose (file);
-		  emit error (TRUE);
+		  emit error (true);
 		  return;
 		}
 	      else
@@ -165,7 +165,7 @@ ReadRamThread::run ()
     {
       port->close_port ();
       fclose (file);
-      emit error (TRUE);
+      emit error (true);
       return;
     }
   else
@@ -180,5 +180,5 @@ ReadRamThread::run ()
 void
 ReadRamThread::canceled (void)
 {
-  end = TRUE;
+  end = true;
 }

@@ -12,17 +12,17 @@
 #include <math.h>
 
 bool
-  Settings::commanual = FALSE;
+  Settings::commanual = 0;
 alg_t
   Settings::algorythm = ALG16;
 dap_t
   Settings::dap = TOGGLE;
 bool
-  Settings::showbbl = FALSE;
+  Settings::showbbl = 0;
 speed_type
   Settings::speed = STANDARD;
 bool
-  Settings::darkmode = FALSE;
+  Settings::darkmode = 0;
 QThread::Priority Settings::priority = QThread::NormalPriority;
 
 Settings::Settings (QWidget * parent):QGroupBox (tr ("Settings"), parent)
@@ -42,7 +42,7 @@ Settings::Settings (QWidget * parent):QGroupBox (tr ("Settings"), parent)
   com_combo = new QComboBox (this);
   combo_boxes->addWidget (com_combo);
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_UNIX
   com_combo->insertItem (0, "/dev/ttyS0");
   com_combo->insertItem (1, "/dev/ttyS1");
   com_combo->insertItem (2, "/dev/ttyS2");
@@ -61,7 +61,7 @@ Settings::Settings (QWidget * parent):QGroupBox (tr ("Settings"), parent)
   com_combo->insertItem (4, "USB");
 #endif
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
   com_combo->insertItem (0, "COM1");
   com_combo->insertItem (1, "COM2");
   com_combo->insertItem (2, "COM3");
@@ -127,7 +127,7 @@ Settings::Settings (QWidget * parent):QGroupBox (tr ("Settings"), parent)
   all->addLayout (down);
   setLayout (all);
 
-  auto_size = TRUE;
+  auto_size = 1;
   mbc = MBCAUTO;
   ram_size = 8;
   flash_size = 512;
@@ -138,10 +138,10 @@ Settings::Settings (QWidget * parent):QGroupBox (tr ("Settings"), parent)
   connect (com_combo, SIGNAL (activated (int)), this, SLOT (setCom (int)));
   connect (mbc_combo, SIGNAL (activated (int)), this, SLOT (setMbc (int)));
   connect (flash_combo, SIGNAL (activated (int)), this,
-	   SLOT (setFlash (int)));
+       SLOT (setFlash (int)));
   connect (ram_combo, SIGNAL (activated (int)), this, SLOT (setRam (int)));
   connect (auto_check, SIGNAL (stateChanged (int)), this,
-	   SLOT (setAuto (int)));
+       SLOT (setAuto (int)));
 
 }
 
@@ -269,7 +269,7 @@ void
 Settings::setAuto (int state)
 {
   if (state == Qt::Checked)
-    auto_size = TRUE;
+    auto_size = 1;
   else
-    auto_size = FALSE;
+    auto_size = 0;
 }

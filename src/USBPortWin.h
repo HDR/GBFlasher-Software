@@ -6,7 +6,7 @@
 #define _USBPORTWIN_H_
 #include <windows.h>
 #include "AbstractPort.h"
-#include <ftd2xx.h>
+#include "ftd2xx.h"
  
 class USBPortWin : public AbstractPort
 {

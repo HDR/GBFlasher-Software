@@ -60,7 +60,7 @@ Q_OBJECT public:
 /* generate crc16 checksum stored in last two bytes of packet */
   static unsigned short generate_crc16 (unsigned char packet[PACKETSIZE]);
 /* both function calculate file size, and check if it's correct ROM/RAM size
- * if it's OK it returns file size in kB else return FALSE
+ * if it's OK it returns file size in kB else return false
  */
   static short flash_file_size (FILE * file);
   static short ram_file_size (FILE * file);

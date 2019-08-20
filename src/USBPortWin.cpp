@@ -27,34 +27,34 @@ USBPortWin::USBPortWin()
 bool USBPortWin::open_port (QString)
 {
     if(FT_Open(0,&ftHandle) != FT_OK)
-        return FALSE;
+        return false;
 /* choose speed */
     if(Settings::speed == STANDARD){
         if(FT_SetBaudRate(ftHandle,185000) != FT_OK)
-           return FALSE;
+           return false;
     }
     else if(Settings::speed == LOW){
         if(FT_SetBaudRate(ftHandle,125000) != FT_OK)
-           return FALSE;
+           return false;
     }
     else if(Settings::speed == HIGH){
         if(FT_SetBaudRate(ftHandle,375000) != FT_OK)
-           return FALSE;
+           return false;
     }
     else if(Settings::speed == ULTRA){
         if(FT_SetBaudRate(ftHandle,1500000) != FT_OK)
-            return FALSE;
+            return false;
     }
 
 	if(FT_SetLatencyTimer(ftHandle, 2) != FT_OK)
-		return FALSE;
+		return false;
 	if(FT_SetDataCharacteristics(ftHandle,FT_BITS_8,FT_STOP_BITS_1,FT_PARITY_NONE) != FT_OK)
-		return FALSE;
+		return false;
 	if(FT_SetDataCharacteristics(ftHandle,FT_BITS_8,FT_STOP_BITS_1,FT_PARITY_NONE) != FT_OK)
-		return FALSE;
+		return false;
 	if(FT_SetTimeouts(ftHandle,5000,0) != FT_OK)
-		return FALSE;
-	return TRUE;/* all ok */
+		return false;
+	return true;/* all ok */
 
   
 }
@@ -62,7 +62,7 @@ bool USBPortWin::open_port (QString)
 bool USBPortWin::close_port ()
 {
 	    FT_Close(ftHandle);
-        return TRUE;
+        return true;
 }
 
 int USBPortWin::send_packet (unsigned char packet[PACKETSIZE])
@@ -85,7 +85,7 @@ bool USBPortWin::send_char (unsigned char character)
 
 int USBPortWin::receive_char (void)
 {
-	time_t tp = time(NULL);
+	time_t tp = time(0);
     unsigned char character;
 	DWORD cbInQue = 0;
     DWORD recivedCount=0;
@@ -97,7 +97,7 @@ int USBPortWin::receive_char (void)
         if(recivedCount != 0)
             break;
         FT_GetQueueStatus(ftHandle,&cbInQue);
-    }while(time(NULL) - tp < SLEEPTIME);
+    }while(time(0) - tp < SLEEPTIME);
 
     if (recivedCount == 0)
         return TIMEOUT;
@@ -110,7 +110,7 @@ int USBPortWin::receive_char (void)
 
 int USBPortWin::receive_packet (unsigned char *packet)
 {
-	time_t tp = time(NULL);
+	time_t tp = time(0);
     DWORD recivedCount=0, bytesToReceive;
 	DWORD cbInQue = 0;
     FT_GetQueueStatus(ftHandle,&cbInQue);
@@ -119,7 +119,7 @@ int USBPortWin::receive_packet (unsigned char *packet)
         if (cbInQue > 0)
             FT_Read(ftHandle, packet, 1, &recivedCount);
         FT_GetQueueStatus(ftHandle,&cbInQue);
-    } while(time(NULL) - tp < SLEEPTIME && recivedCount == 0);
+    } while(time(0) - tp < SLEEPTIME && recivedCount == 0);
     if (recivedCount == 0)
         return TIMEOUT;
     else
@@ -136,7 +136,7 @@ int USBPortWin::receive_packet (unsigned char *packet)
         else
         {
             unsigned int bytesLeft = PACKETSIZE-1;
-            tp = time(NULL);
+            tp = time(0);
             recivedCount = 0;
             FT_GetQueueStatus(ftHandle,&cbInQue);
             do
@@ -150,12 +150,12 @@ int USBPortWin::receive_packet (unsigned char *packet)
 
 						FT_Read(ftHandle, &packet[PACKETSIZE-bytesLeft], bytesToReceive, &recivedCount);
                         bytesLeft -= recivedCount;
-                        tp = time(NULL);
+                        tp = time(0);
                 }
                 
                    
                 FT_GetQueueStatus(ftHandle,&cbInQue);
-            }while(time(NULL) - tp < SLEEPTIME && bytesLeft != 0);
+            }while(time(0) - tp < SLEEPTIME && bytesLeft != 0);
 
             if(bytesLeft > 0)
                 return TIMEOUT;

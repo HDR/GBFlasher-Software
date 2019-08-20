@@ -11,8 +11,8 @@
 void
 WriteFlashThread::run ()
 {
-  end = FALSE;
-  bool zamykanie = FALSE;
+  end = false;
+  bool zamykanie = false;
 
   int character, page_number, packet_number, retries = 0;
   unsigned char packet[72], data[16384];	/* 16 kB is one page */
@@ -23,7 +23,7 @@ WriteFlashThread::run ()
   cfg.dap = Settings::dap;
   cfg.page_count = page_count;
 
-  if (file == NULL)
+  if (file == 0)
     {
       port->close_port ();
       emit error (FILEERROR_O);
@@ -32,7 +32,7 @@ WriteFlashThread::run ()
 
   do
     {				/* send start and wait for ACK */
-      if (Logic::send_start_packet (port, cfg) == FALSE)
+      if (Logic::send_start_packet (port, cfg) == false)
 	{
 	  port->close_port ();
 	  fclose (file);
@@ -79,7 +79,7 @@ WriteFlashThread::run ()
 	    {
 	      Logic::fill_data_packet (packet, &data[packet_number * 64],
 				       LAST_DATA, packet_number, page_number);
-	      zamykanie = TRUE;
+	      zamykanie = true;
 
 	    }
 
@@ -139,11 +139,11 @@ WriteFlashThread::run ()
 
   port->close_port ();
   fclose (file);
-  emit error (TRUE);
+  emit error (true);
 }
 
 void
 WriteFlashThread::canceled (void)
 {
-  end = TRUE;
+  end = true;
 }

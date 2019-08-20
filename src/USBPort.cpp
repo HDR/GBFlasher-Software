@@ -27,40 +27,40 @@ bool
 USBPort::open_port (QString /*port_name*/)
 {
   if (ftdi_usb_open (&ftdic, 0x0403, 0x6001) < 0)
-    return FALSE;
+    return false;
 /* choose speed */
   if (Settings::speed == STANDARD)
     {
       if (ftdi_set_baudrate (&ftdic, 185000) < 0)
-    return FALSE;
+    return false;
     }
   else if (Settings::speed == LOW)
     {
       if (ftdi_set_baudrate (&ftdic, 125000) < 0)
-    return FALSE;
+    return false;
     }
   else if (Settings::speed == HIGH)
     {
       if (ftdi_set_baudrate (&ftdic, 375000) < 0)
-    return FALSE;
+    return false;
     }
   else if (Settings::speed == ULTRA)
       {
       if (ftdi_set_baudrate (&ftdic, 1500000) < 0)
-          return FALSE;
+          return false;
       }
   }
 
   if (ftdi_set_latency_timer (&ftdic, 2) < 0)
-    return FALSE;
+    return false;
   if (ftdi_set_line_property (&ftdic, BITS_8, STOP_BIT_1, NONE) < 0)
-    return FALSE;
+    return false;
   //if(FT_SetTimeouts(ftHandle,5000,0) != FT_OK)
-  //      return FALSE;
+  //      return false;
   //if(ftdi_enable_bitbang(&ftdic,0xFF) < 0)
-  //      return FALSE;
+  //      return false;
 
-  return TRUE;			/* all ok */
+  return true;			/* all ok */
 
 
 
@@ -70,7 +70,7 @@ bool
 USBPort::close_port ()
 {
   ftdi_usb_close (&ftdic);
-  return TRUE;
+  return true;
 }
 
 int
@@ -96,7 +96,7 @@ USBPort::send_char (unsigned char character)
 int
 USBPort::receive_char (void)
 {
-  time_t tp = time (NULL);
+  time_t tp = time (0);
   unsigned char character;
   int bytesReceived = 0;
   do
@@ -105,7 +105,7 @@ USBPort::receive_char (void)
       if (bytesReceived != 0)
 	break;
     }
-  while (time (NULL) - tp < SLEEPTIME);
+  while (time (0) - tp < SLEEPTIME);
 
   if (bytesReceived == 0)
     return TIMEOUT;
@@ -119,13 +119,13 @@ USBPort::receive_char (void)
 int
 USBPort::receive_packet (unsigned char *packet)
 {
-  time_t tp = time (NULL);
+  time_t tp = time (0);
   int bytesReceived = 0, bytesLeft;
   do
     {
       bytesReceived = ftdi_read_data (&ftdic, packet, 1);
     }
-  while (time (NULL) - tp < SLEEPTIME && bytesReceived == 0);
+  while (time (0) - tp < SLEEPTIME && bytesReceived == 0);
   if (bytesReceived == 0)
     return TIMEOUT;
   else
@@ -142,7 +142,7 @@ USBPort::receive_packet (unsigned char *packet)
       else
 	{
 	  unsigned int remaining = PACKETSIZE - 1;
-	  tp = time (NULL);
+	  tp = time (0);
 	  bytesReceived = 0;
 	  do
 	    {
@@ -152,12 +152,12 @@ USBPort::receive_packet (unsigned char *packet)
 		ftdi_read_data (&ftdic, &packet[PACKETSIZE - remaining],
 				bytesLeft);
 	      remaining -= bytesReceived;
-	      tp = time (NULL);
+	      tp = time (0);
 
 
 
 	    }
-	  while (time (NULL) - tp < SLEEPTIME && remaining != 0);
+	  while (time (0) - tp < SLEEPTIME && remaining != 0);
 	  if (remaining > 0)
 	    return TIMEOUT;
 	  else
