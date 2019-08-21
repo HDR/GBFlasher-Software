@@ -2,7 +2,6 @@ TEMPLATE = app
 TARGET = gbcflsh
 DEPENDPATH += .
 INCLUDEPATH += .
-#DESTDIR = build
 
 QT += widgets
 
@@ -44,7 +43,7 @@ SOURCES += src/SerialPortWin.cpp \
            src/USBPortWin.cpp
 HEADERS += src/SerialPortWin.h \
            src/USBPortWin.h
-LIBS += -L"D:\OneDrive\Dokumenter\GitHub\GBFlasher-Software-QT5\lib" "D:\OneDrive\Dokumenter\GitHub\GBFlasher-Software-QT5\lib\ftd2xx.lib" \
+LIBS += -L"\lib" "D:\OneDrive\Dokumenter\GitHub\GBFlasher-Software\lib\ftd2xx.lib" \
 }
 unix {
 SOURCES += src/SerialPort.cpp \
