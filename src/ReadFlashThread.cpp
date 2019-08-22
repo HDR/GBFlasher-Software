@@ -1,7 +1,3 @@
-/*****************************************************************************
-** ReadFlashThread.cpp
-** Author: Kraku
-*****************************************************************************/
 #include "ReadFlashThread.h"
 #include "Settings.h"
 #include "Logic.h"
@@ -12,7 +8,7 @@
 void
 ReadFlashThread::run ()
 {
-  end = FALSE;
+  end = false;
   unsigned char packet[72], data[16384];
   int character, data_type = 0x00, recived = 0, retries =
     0, page_number, packet_number, prv_count = 0;
@@ -23,7 +19,7 @@ ReadFlashThread::run ()
   cfg.dap = Settings::dap;
   cfg.page_count = page_count;
 
-  if (file == NULL)
+  if (file == nullptr)
     {
       port->close_port ();
       emit error (FILEERROR_O);
@@ -32,7 +28,7 @@ ReadFlashThread::run ()
 
   do
     {				/* send start packet and wait for first one of response */
-      if (Logic::send_start_packet (port, cfg) == FALSE)
+      if (Logic::send_start_packet (port, cfg) == false)
 	{
 	  port->close_port ();
 	  fclose (file);
@@ -161,7 +157,7 @@ ReadFlashThread::run ()
     {
       port->close_port ();
       fclose (file);
-      emit error (TRUE);
+      emit error (true);
     }
   else
     {
@@ -174,5 +170,5 @@ ReadFlashThread::run ()
 void
 ReadFlashThread::canceled (void)
 {
-  end = TRUE;
+  end = true;
 }

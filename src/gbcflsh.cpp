@@ -1,13 +1,9 @@
-/*****************************************************************************
-** gbcflsh.cpp - Main source file, starts application, parse args
-** Author: Kraku
-*****************************************************************************/
-#include <QApplication>
+#include <QtWidgets/QApplication>
 #include <QTranslator>
 #include <QSettings>
 #include <QTimer>
 #include <QTextCodec>
-#include <QMessageBox>
+#include <QtWidgets/QMessageBox>
 #include "Gui.h"
 #include "const.h"
 #include "Settings.h"
@@ -21,7 +17,7 @@ parse_params (int /*argc*/, char *argv[])
     {
 /* disable auto com search in windows */
       if (strcmp (*argv, "-commanual") == 0)
-	Settings::commanual = TRUE;
+	Settings::commanual = true;
 /* additional communication params */
       if (strcmp (*argv, "-12bit") == 0)
 	Settings::algorythm = ALG12;
@@ -32,7 +28,7 @@ parse_params (int /*argc*/, char *argv[])
       if (strcmp (*argv, "-datapoll") == 0)
 	Settings::dap = DATAPOLL;
       if (strcmp (*argv, "-showbbl") == 0)
-	Settings::showbbl = TRUE;
+	Settings::showbbl = true;
 /*
  * USB speed LOW 125000bps, HI 375000, ULTRA 1500000
  */
@@ -46,7 +42,7 @@ parse_params (int /*argc*/, char *argv[])
  * Appearance settings
  */
       if (strcmp (*argv, "-darkmode") == 0)
-    Settings::darkmode = TRUE;
+    Settings::darkmode = true;
 
 
 /* 
@@ -96,7 +92,7 @@ main (int argc, char *argv[])
 
   Gui window;
   window.show ();
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
   window.startup_info();
 #endif
   return app.exec ();

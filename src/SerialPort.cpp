@@ -1,7 +1,3 @@
-/*****************************************************************************
-** SerialPort.cpp
-** Author: Kraku
-*****************************************************************************/
 #include "const.h"
 #include "SerialPort.h"
 
@@ -12,7 +8,7 @@ extern "C"{
  * Header files for RS232C support under Linux
  */
 #include <unistd.h>
-#include <termios.h>
+#include "termios.h"
 #include <fcntl.h>
 }
 
@@ -21,17 +17,17 @@ SerialPort::SerialPort()
 	
 {
 	descriptor = -1;
-	/* Descriptor -1 is invalid - something like NULL */
+	/* Descriptor -1 is invalid - something like 0 */
 }
 
 
 bool SerialPort::open_port(QString port_name)
 {
   /* Open port in RW mode, don't check DCD line */
-  descriptor = open (port_name.toAscii(), O_RDWR | O_NOCTTY | O_NDELAY);
+  descriptor = open (port_name.toLatin1(), O_RDWR | O_NOCTTY | O_NDELAY);
   if (descriptor != -1)			/* is port opened */
   {
-    opened = TRUE;
+    opened = true;
     struct termios ts;		/* structure describing port */
     tcgetattr (descriptor, &ts);	/* get actual state of port */
 
@@ -59,21 +55,21 @@ bool SerialPort::open_port(QString port_name)
      */
     tcsetattr (descriptor, TCSANOW, &ts);
     fcntl (descriptor, F_SETFL, FNDELAY); /* don't wait for data while reading */
-    return TRUE;
+    return true;
   }
   else
-    return FALSE;
+    return false;
 }
 
 bool SerialPort::close_port ()
 {
   if (descriptor == -1)
-    return FALSE;
+    return false;
   else
   {
     close (descriptor);
-    opened = FALSE;
-    return TRUE;
+    opened = false;
+    return true;
   }
 }
 
@@ -86,14 +82,14 @@ int SerialPort::send_packet(unsigned char packet[PACKETSIZE])
 bool SerialPort::send_char (unsigned char character)
 {
   if (write (descriptor, &character, 1))
-    return TRUE;
+    return true;
   else
-    return FALSE;
+    return false;
 }
 
 int SerialPort::receive_char (void)
 {
-  time_t tp = time (NULL);	/* save current time */
+  time_t tp = time (0);	/* save current time */
   unsigned char character;
   int read_count = 0;
 
@@ -101,7 +97,7 @@ int SerialPort::receive_char (void)
   {
     read_count = read (descriptor, &character, 1);	/* try to read char... */
   }
-  while (read_count <= 0 && time (NULL) - tp < SLEEPTIME);
+  while (read_count <= 0 && time (0) - tp < SLEEPTIME);
 
   /*
    * ...until done or SLEEPTIME is over
@@ -118,14 +114,14 @@ int SerialPort::receive_char (void)
 
 int SerialPort::receive_packet (unsigned char *packet)
 {
-  time_t tp = time (NULL);
+  time_t tp = time (0);
   int read_count;
 
   do
   {
     read_count = read (descriptor, packet, 1);
   }
-  while (read_count <= 0 && time (NULL) - tp < SLEEPTIME);
+  while (read_count <= 0 && time (0) - tp < SLEEPTIME);
 
   if (read_count <= 0)
     return TIMEOUT;
@@ -143,7 +139,7 @@ int SerialPort::receive_packet (unsigned char *packet)
     else			/* if packet, read rest of it */
     {
       int data_left = PACKETSIZE - 1;
-      tp = time (NULL);
+      tp = time (0);
 
       do
       {
@@ -156,10 +152,10 @@ int SerialPort::receive_packet (unsigned char *packet)
 	if (read_count > 0)
 	{
 	  data_left -= read_count;
-	  tp = time (NULL);	/* reset wait timer */
+	  tp = time (0);	/* reset wait timer */
 	}
       }
-      while (data_left != 0 && time (NULL) - tp < SLEEPTIME);
+      while (data_left != 0 && time (0) - tp < SLEEPTIME);
       /*
        * read until packet is full or time ends 
        */

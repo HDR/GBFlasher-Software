@@ -1,9 +1,5 @@
-/*****************************************************************************
-** const.h - definitions of constants used in program
-** Author: Kraku
-*****************************************************************************/
-#ifndef _CONST_H_
-#define _CONST_H_
+#ifndef FL_CONST_H_
+#define FL_CONST_H_
 
 /* control characters */
 enum cchars
@@ -15,18 +11,18 @@ enum cchars
 #define FRAMESIZE 64
 #define AUTOSIZE -1
 #define PORTS_COUNT 4
-#define VER "1.3.1"
+#define VER "1.3.1 (64bit)"
 
 #define USB 0
 #define SERIAL 1
 
 /* strings for version information */
-#ifdef Q_WS_X11
+#ifdef Q_OS_UNIX
 #define SYSTEM "LINUX"
 #define DEVELOPED "GCC 4.1.1 + QT 4.3.2"
 #endif
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #define SYSTEM "WINDOWS"
 #define DEVELOPED "GCC 8.2.0 + QT 4.8.7"
 #endif

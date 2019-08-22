@@ -1,7 +1,3 @@
-/*****************************************************************************
-** About.cpp - Source file of About DialogBox containing info about program
-** Author: Kraku
-*****************************************************************************/
 #include "About.h"
 #include "about.xpm"
 #include "const.h"

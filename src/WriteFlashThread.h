@@ -1,9 +1,5 @@
-/*****************************************************************************
-** WriteFlashThread.h
-** Author: Kraku
-*****************************************************************************/
-#ifndef _WRITEFLASHTHREAD_H_
-#define _WRITEFLASHTHREAD_H_
+#ifndef FL_WRITEFLASHTHREAD_H_
+#define FL_WRITEFLASHTHREAD_H_
 #include <QThread>
 #include "AbstractPort.h"
 #include "Logic.h"

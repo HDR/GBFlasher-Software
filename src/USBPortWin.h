@@ -1,12 +1,8 @@
-/*****************************************************************************
-** USBPortWin.h - USB driver for Windows based on FTD2XX library
-** Author: Kraku
-*****************************************************************************/
-#ifndef _USBPORTWIN_H_
-#define _USBPORTWIN_H_
+#ifndef FL_USBPORTWIN_H_
+#define FL_USBPORTWIN_H_
 #include <windows.h>
 #include "AbstractPort.h"
-#include <ftd2xx.h>
+#include "ftd2xx.h"
  
 class USBPortWin : public AbstractPort
 {

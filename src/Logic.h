@@ -1,9 +1,5 @@
-/*****************************************************************************
-** Logic.h - Header file for utility functions used in communication proces
-** Author: Kraku
-*****************************************************************************/
-#ifndef _LOGIC_H_
-#define _LOGIC_H_
+#ifndef FL_LOGIC_H_
+#define FL_LOGIC_H_
 #include <QObject>
 #include "const.h"
 #include "AbstractPort.h"
@@ -60,7 +56,7 @@ Q_OBJECT public:
 /* generate crc16 checksum stored in last two bytes of packet */
   static unsigned short generate_crc16 (unsigned char packet[PACKETSIZE]);
 /* both function calculate file size, and check if it's correct ROM/RAM size
- * if it's OK it returns file size in kB else return FALSE
+ * if it's OK it returns file size in kB else return false
  */
   static short flash_file_size (FILE * file);
   static short ram_file_size (FILE * file);
@@ -77,7 +73,7 @@ Q_OBJECT public:
 				unsigned char data[FRAMESIZE],
 				char packet_type, unsigned char packet_number,
 				int page_number);
-    Logic (QObject * parent = 0);
+    Logic (QObject * parent = nullptr);
 /* query device for status of itself and cart, fills status_t struct */
   static int read_status (AbstractPort * port, const char *name_portu, char id,
 			  char mbc, char alg, status_t * flasher_stat);

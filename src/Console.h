@@ -1,10 +1,5 @@
-/*****************************************************************************
-** Console.h - header of Console used to print infos from other
-** modules
-** Author: Kraku
-*****************************************************************************/
-#ifndef _CONSOLE_H_
-#define _CONSOLE_H_
+#ifndef FL_CONSOLE_H_
+#define FL_CONSOLE_H_
 
 #include <QTextEdit>
 #include <QString>
@@ -17,7 +12,7 @@ public:
   Console (QWidget * parent):QTextEdit (parent)
   {
     this->setMinimumWidth (400);
-    this->setReadOnly (TRUE);
+    this->setReadOnly (true);
     QPalette palette;
       palette.setColor (QPalette::Base, QColor (0, 0, 0));
       this->setPalette (palette);
@@ -33,7 +28,7 @@ public:
 
   void line ()
   {
-#ifdef Q_WS_X11
+#ifdef Q_OS_UNIX
     print ("<br>");
 #else
     print ("<hr><br>");

@@ -1,9 +1,5 @@
-/*****************************************************************************
-** SerialPortWin.h - Serial driver for windows
-** Author: Kraku
-*****************************************************************************/
-#ifndef _SERIALPORTWIN_H_
-#define _SERIALPORTWIN_H_
+#ifndef FL_SERIALPORTWIN_H_
+#define FL_SERIALPORTWIN_H_
 #include <windows.h>
 #include "AbstractPort.h"
 

@@ -2,7 +2,8 @@ TEMPLATE = app
 TARGET = gbcflsh
 DEPENDPATH += .
 INCLUDEPATH += .
-#DESTDIR = build
+
+QT += widgets
 
 QMAKE_LFLAGS += -static
 
@@ -22,7 +23,10 @@ HEADERS += src/About.h \
            src/WriteFlashThread.h \
            src/WriteRamThread.h \
            src/about.xpm \
-           src/icon.xpm
+           src/ftd2xx.h \
+           src/ftdi.h \
+           src/icon.xpm \
+           src/termios.h
 SOURCES += src/About.cpp \
            src/EraseThread.cpp \
            src/gbcflsh.cpp \
@@ -39,7 +43,7 @@ SOURCES += src/SerialPortWin.cpp \
            src/USBPortWin.cpp
 HEADERS += src/SerialPortWin.h \
            src/USBPortWin.h
-LIBS += -lftd2xx \
+LIBS += -L"$$PWD/src/lib" -lftd2xx
 }
 unix {
 SOURCES += src/SerialPort.cpp \
@@ -53,4 +57,5 @@ INSTALLS += exec config
 }
 
 DISTFILES += \
+    src/lib/ftd2xx.lib \
     src/icon.xpm

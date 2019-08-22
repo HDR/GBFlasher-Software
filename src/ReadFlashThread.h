@@ -1,9 +1,5 @@
-/*****************************************************************************
-** ReadFlashThread.h 
-** Author: Kraku
-*****************************************************************************/
-#ifndef _READFLASHTHREAD_H_
-#define _READFLASHTHREAD_H_
+#ifndef FL_READFLASHTHREAD_H_
+#define FL_READFLASHTHREAD_H_
 #include <QThread>
 #include "AbstractPort.h"
 #include "Logic.h"

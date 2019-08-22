@@ -1,9 +1,5 @@
-/*****************************************************************************
-** SerialPort.h - SerialPort driver for Linux/Posix based systems
-** Author: Kraku
-*****************************************************************************/
-#ifndef _SERIALPORT_H_
-#define _SERIALPORT_H_
+#ifndef FL_SERIALPORT_H_
+#define FL_SERIALPORT_H_
 #include "AbstractPort.h"
 
 class SerialPort:public AbstractPort

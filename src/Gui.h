@@ -1,7 +1,3 @@
-/*****************************************************************************
-** Gui.h - class of main dialog window
-** Author: Kraku
-*****************************************************************************/
 #include <QWidget>
 #include <QLayout>
 #include <QLabel>
@@ -50,7 +46,7 @@ class Gui:public QWidget
   WriteRamThread * thread_WRAM;
 
 public:
-    Gui (QWidget * parent = 0);
+    Gui (QWidget * parent = nullptr);
   static int port_type;
 
 

@@ -1,10 +1,5 @@
-/*****************************************************************************
-** EraseThread.h - Header file of thread responsible for process of 
-** FLASH and RAM erase
-** Author: Kraku
-*****************************************************************************/
-#ifndef _ERASETHREAD_H_
-#define _ERASETHREAD_H_
+#ifndef FL_ERASETHREAD_H_
+#define FL_ERASETHREAD_H_
 #include <QThread>
 #include "AbstractPort.h"
 #include "Logic.h"
@@ -22,7 +17,7 @@ public:
 /* main point of thread  */
   virtual void run ();
 public slots:
-  void canceled (void) { end = TRUE; }
+  void canceled (void) { end = true; }
 signals:
   void set_progress (int ile, int max);
   void error (int err);

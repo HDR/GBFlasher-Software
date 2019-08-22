@@ -1,7 +1,3 @@
-/*****************************************************************************
-** EraseThread.cpp
-** Author: Kraku
-*****************************************************************************/
 #include "EraseThread.h"
 #include "Logic.h"
 #include "const.h"
@@ -25,7 +21,7 @@ EraseThread::run ()
   crc16 = Logic::generate_crc16 (packet);
   packet[PACKETSIZE - 2] = crc16 / 256;
   packet[PACKETSIZE - 1] = crc16 % 256;
-  end = FALSE;
+  end = false;
 
   /* send erase packet */
   if (port->send_packet (packet) < PACKETSIZE)
@@ -35,7 +31,7 @@ EraseThread::run ()
       return;
     }
 
-  tp = time (NULL);
+  tp = time (nullptr);
   do
     {
       /* end of thread - operation canceled */
@@ -49,13 +45,13 @@ EraseThread::run ()
 	{
 	  port->close_port ();
 	  emit set_progress (1, 1);
-	  emit error (TRUE);
+	  emit error (true);
 	  return;
 	}
-      if (time (NULL) != tp)
-	emit set_progress (time (NULL) - tp, DELTIME);
+      if (time (nullptr) != tp)
+    emit set_progress (time (nullptr) - tp, DELTIME);
     }
-  while (time (NULL) - tp < DELTIME);
+  while (time (nullptr) - tp < DELTIME);
   /* wait for erase DELTIME sec.
    * hardware independent!
    */

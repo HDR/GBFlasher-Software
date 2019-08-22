@@ -1,9 +1,5 @@
-/*****************************************************************************
-** Settings.h - configuration widget
-** Author: Kraku
-*****************************************************************************/
-#ifndef _SETTINGS_H_
-#define _SETTINGS_H_
+#ifndef FL_SETTINGS_H_
+#define FL_SETTINGS_H_
 
 #include <QGroupBox>
 #include <QComboBox>
@@ -47,7 +43,7 @@ public:
 
 
 
-    Settings (QWidget * parent = 0);
+    Settings (QWidget * parent = nullptr);
 
   int getFlash ()
   {
