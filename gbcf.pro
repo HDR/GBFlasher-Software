@@ -43,7 +43,7 @@ SOURCES += src/SerialPortWin.cpp \
            src/USBPortWin.cpp
 HEADERS += src/SerialPortWin.h \
            src/USBPortWin.h
-LIBS += -L"\lib" "D:\OneDrive\Dokumenter\GitHub\GBFlasher-Software\lib\ftd2xx.lib" \
+LIBS += -L"$$PWD/src/lib" -lftd2xx
 }
 unix {
 SOURCES += src/SerialPort.cpp \
@@ -57,5 +57,5 @@ INSTALLS += exec config
 }
 
 DISTFILES += \
-    lib/ftd2xx.lib \
+    src/lib/ftd2xx.lib \
     src/icon.xpm
