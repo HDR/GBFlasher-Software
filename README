@@ -5,7 +5,7 @@ Changes
 ---------------------------------
 - Support for 4MB roms on MBC3 chips
 - Cleaner looking gui
-- Compiled statically so that the software can be launched without installing anything or downloading anything else
+- Compiled statically so that the software can be launched without downloading or installing anything else
 - Higher baud rate option
 - Darkmode
 - New icon
