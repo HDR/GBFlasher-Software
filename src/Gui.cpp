@@ -13,6 +13,7 @@
 #include "QTextStream"
 #include "QDebug"
 #include "QDateTime"
+#include "QDesktopServices"
 
 #ifdef Q_OS_WIN
 #include "USBPortWin.h"
@@ -603,8 +604,10 @@ void Gui::firmware ()
 void Gui::download(QNetworkReply *reply)
 {
     if(reply->error()){
-        qDebug() << reply->errorString();
-        qDebug() << reply->url().toString();
+        console->print(reply->errorString());
+        console->print(reply->url().toString());
+        console->print(">Could not download firmware, opening the link in a browser instead.");
+        QDesktopServices::openUrl(QUrl("https://github.com/MrHDR/GBFlasher-Firmware/releases/latest/download/GBFlasher-Firmware.hex"));
     }
     else{
         QString filename = QFileDialog::getSaveFileName(this, tr("Save"), "GBFlasher-Firmware",tr("Firmware (*.hex)"));
