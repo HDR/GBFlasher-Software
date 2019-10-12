@@ -21,7 +21,6 @@ class Settings:public QGroupBox
   QComboBox *mbc_combo;
   QComboBox *flash_combo;
   QComboBox *ram_combo;
-  QLabel *com_label;
   QLabel *mbc_label;
   QLabel *flash_label;
   QLabel *ram_label;
@@ -87,7 +86,6 @@ public:
   void flash_types (int type);
 
   public slots:
-  void setCom (int index);
   void setMbc (int mbc_nr);
   void setFlash (int index);
   void setRam (int index);

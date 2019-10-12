@@ -32,48 +32,6 @@ Settings::Settings (QWidget * parent):QGroupBox (tr ("Settings"), parent)
   north = new QHBoxLayout ();
   all = new QVBoxLayout ();
 
-
-  com_label = new QLabel ("PORT:", this);
-  labels->addWidget (com_label);
-  com_combo = new QComboBox (this);
-  combo_boxes->addWidget (com_combo);
-
-#ifdef Q_OS_UNIX
-  com_combo->insertItem (0, "/dev/ttyS0");
-  com_combo->insertItem (1, "/dev/ttyS1");
-  com_combo->insertItem (2, "/dev/ttyS2");
-  if (set.contains ("user_com"))
-    {
-      com_combo->insertItem (3, set.value ("user_com").toString ());
-      com_combo->setCurrentIndex (3);
-
-    }
-  else
-    {
-      // /dev/flasher can be symbolic link to device,
-      // if it's connected to some strange port
-      com_combo->insertItem (3, "/dev/flasher");
-    }
-  com_combo->insertItem (4, "USB");
-#endif
-
-#ifdef Q_OS_WIN
-  com_combo->insertItem (0, "COM1");
-  com_combo->insertItem (1, "COM2");
-  com_combo->insertItem (2, "COM3");
-  if (set.contains ("user_com"))
-    {
-      com_combo->insertItem (3, set.value ("user_com").toString ());
-      com_combo->setCurrentIndex (3);
-    }
-  else
-    {
-      com_combo->insertItem (3, "COM4");
-    }
-  com_combo->insertItem (4, "USB");
-#endif
-
-
   mbc_label = new QLabel ("MBC:", this);
 
   labels->addWidget (mbc_label);
@@ -127,30 +85,14 @@ Settings::Settings (QWidget * parent):QGroupBox (tr ("Settings"), parent)
   mbc = MBCAUTO;
   ram_size = 8;
   flash_size = 512;
-  com_name = com_combo->currentText ();
-  Gui::port_type = SERIAL;
 
 
-  connect (com_combo, SIGNAL (activated (int)), this, SLOT (setCom (int)));
   connect (mbc_combo, SIGNAL (activated (int)), this, SLOT (setMbc (int)));
   connect (flash_combo, SIGNAL (activated (int)), this,
        SLOT (setFlash (int)));
   connect (ram_combo, SIGNAL (activated (int)), this, SLOT (setRam (int)));
   connect (auto_check, SIGNAL (stateChanged (int)), this,
        SLOT (setAuto (int)));
-
-}
-
-
-void
-Settings::setCom (int index)
-{
-  com_name = getCom (index);
-  com_combo->setCurrentIndex (index);
-  if (index < PORTS_COUNT)
-    Gui::port_type = SERIAL;
-  else
-    Gui::port_type = USB;
 
 }
 

@@ -6,27 +6,20 @@
 #include "Settings.h"
 #include "Logic.h"
 #include "About.h"
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 #include <string>
 #include "QtWidgets/QApplication"
 #include "QTextStream"
-
-
-
-#ifdef Q_OS_UNIX
-#include "SerialPort.h"
-#include "USBPort.h"
-#endif
+#include "QDebug"
+#include "QDateTime"
 
 #ifdef Q_OS_WIN
 #include "USBPortWin.h"
-#include "SerialPortWin.h"
 #endif
 
 #include "const.h"
 #include "icon.xpm"
-
-int
-  Gui::port_type = SERIAL;
 
 Gui::Gui (QWidget * parent):QWidget (parent)
 {
@@ -79,6 +72,7 @@ Gui::Gui (QWidget * parent):QWidget (parent)
   eflash_btn = new QPushButton (tr ("Erase FLASH"), this);
   eram_btn = new QPushButton (tr ("Erase RAM"), this);
   about_btn = new QPushButton (tr ("About"), this);
+  firmware_btn = new QPushButton (tr ("Download Latest Firmware"), this);
 
   center->addWidget (status_btn, Qt::AlignTop);
   center->addWidget (rflash_btn);
@@ -90,6 +84,8 @@ Gui::Gui (QWidget * parent):QWidget (parent)
   center->addSpacing (20);
   center->addWidget (about_btn);
   center->addStretch (1);
+  firmware_btn->setFixedWidth(140);
+  left->addWidget (firmware_btn);
   grid->addLayout (center, 0, 1);
 
   thread_WFLA = new WriteFlashThread;
@@ -114,6 +110,7 @@ Gui::Gui (QWidget * parent):QWidget (parent)
   connect (wram_btn, SIGNAL (clicked ()), this, SLOT (write_ram ()));
   connect (eram_btn, SIGNAL (clicked ()), this, SLOT (erase_ram ()));
   connect (about_btn, SIGNAL (clicked ()), this, SLOT (about ()));
+  connect (firmware_btn, SIGNAL (clicked ()), this, SLOT (firmware ()));
 
   connect (thread_WFLA, SIGNAL (set_progress (int, int)), this,
        SLOT (setProgress (int, int)));
@@ -137,91 +134,35 @@ Gui::Gui (QWidget * parent):QWidget (parent)
 	   SLOT (setRamButtons (void)));
   setProgress (0, 1);
   console->setTextColor(Qt::white);
+
   console->print (tr ("GB Cart Flasher version ") + VER + tr (" started."));
-#ifdef Q_OS_WIN
-/* device detection is avilable only on Windows */
-  if (Settings::commanual == false)
-    {
-      console->print (tr ("Detecting device..."));
-    }
-#endif
 }
 
 AbstractPort *
 Gui::create_port (void)
 {
-  switch (port_type)
-    {
-    case USB:
-#ifdef Q_OS_WIN
-      return new USBPortWin;
-#endif
-#ifdef Q_OS_UNIX
-      return new USBPort;
-#endif
-    case SERIAL:
-#ifdef Q_OS_WIN
-      return new SerialPortWin;
-#endif
-#ifdef Q_OS_UNIX
-      return new SerialPort;
-#endif
-    }
-  return nullptr;
+    return new USBPortWin;
 }
 
 void
 Gui::startup_info (void)
 {
   status_t status;
-  int which_port = -1;		//none at beggining
-
 
   if (Settings::commanual == false)
     {
-      port_type = USB;
       AbstractPort *port = create_port ();
       if (Logic::read_status (port, "USB", NREAD_ID, 0x00, 0x00, &status) ==
 	  true)
 	{
 	  QString tmp;
       console->print (tr ("Device connected via: USB"));
-	  settings->setCom (4);	//4 is index of usb in combobox
 	  tmp =
 	    tmp.sprintf (" %d%d.%d%d", status.ver_11, status.ver_12,
                          status.ver_21, status.ver_22);
 	  console->print (tr ("Device firmware version:") + tmp);
 	  console->line ();
 	  return;
-	}
-
-      port_type = SERIAL;
-      port = create_port ();
-      for (int i = 0; i < PORTS_COUNT; i++)
-	{
-	  if (Logic::
-	      read_status (port, settings->getCom(i).toLatin1(), NREAD_ID, 0x00, 0x00,
-			   &status) == true)
-	    {
-	      which_port = i;
-	      break;
-	    }
-	}
-      if (which_port == -1)
-	{
-	  console->print (tr ("Device not found!"));
-	  console->print (tr ("Check COM port connection."));
-	}
-      else
-	{
-	  QString tmp;
-      console->print (tr ("Device connected via: ") +
-			  settings->getCom (which_port));
-	  settings->setCom (which_port);
-	  tmp =
-	    tmp.sprintf (" %d%d.%d%d", status.ver_11, status.ver_12,
-			 status.ver_21, status.ver_22);
-	  console->print (tr ("Device firmware version:") + tmp);
 	}
     }
   console->line ();
@@ -444,7 +385,7 @@ Gui::write_ram (void)
     {
       long bytes_count;
       short kilobytes_count;
-      thread_WRAM->port = create_port ();;
+      thread_WRAM->port = create_port ();
       if (thread_WRAM->port->open_port (settings->getCom().toLatin1()) == false)
 	{
 	  print_error (PORT_ERROR);
@@ -502,8 +443,6 @@ Gui::write_ram (void)
 		      "KB");
     }
 }
-
-
 
 void
 Gui::erase_flash (void)
@@ -624,7 +563,7 @@ Gui::print_error (int err)
       break;
 
     case PORT_ERROR:
-      console->print (tr (">Error opening COM port."));
+      console->print (tr (">No Cart Flasher Connected."));
       break;
 
     case WRONG_SIZE:
@@ -650,4 +589,31 @@ Gui::about ()
 {
   About about (this);
   about.exec ();
+}
+
+void Gui::firmware ()
+{
+    manager = new QNetworkAccessManager(this);
+    QUrl url("https://github.com/MrHDR/GBFlasher-Firmware/releases/latest/download/GBFlasher-Firmware.hex");
+    connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(download(QNetworkReply*)));
+    QNetworkRequest request(url);
+    request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+    manager->get(request);
+}
+void Gui::download(QNetworkReply *reply)
+{
+    if(reply->error()){
+        qDebug() << reply->errorString();
+        qDebug() << reply->url().toString();
+    }
+    else{
+        QString filename = QFileDialog::getSaveFileName(this, tr("Save"), "GBFlasher-Firmware",tr("Firmware (*.hex)"));
+        QFile file(filename);
+        if(file.open(QFile::WriteOnly)) {
+            file.write(reply->readAll());
+            file.flush();
+            file.close();
+            console->print(">Successfully Downloaded Firmware!");
+        }
+    }
 }

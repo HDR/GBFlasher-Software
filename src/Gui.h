@@ -4,6 +4,7 @@
 #include <QProgressBar>
 #include <QPushButton>
 #include <QString>
+#include <QNetworkAccessManager>
 #include "Settings.h"
 #include "Console.h"
 #include "Logic.h"
@@ -36,6 +37,7 @@ class Gui:public QWidget
   QPushButton *eflash_btn;
   QPushButton *eram_btn;
   QPushButton *about_btn;
+  QPushButton *firmware_btn;
   QString file_name;
   QString path;
   About about_dlg;
@@ -44,6 +46,7 @@ class Gui:public QWidget
   EraseThread *thread_E;
   ReadRamThread *thread_RRAM;
   WriteRamThread * thread_WRAM;
+  QNetworkAccessManager *manager;
 
 public:
     Gui (QWidget * parent = nullptr);
@@ -62,6 +65,8 @@ public:
   void erase_flash (void);
   void erase_ram (void);
   void about ();
+  void firmware ();
+  void download (QNetworkReply *reply);
   void setProgress (int ile, int max);
   AbstractPort *create_port ();
 };

@@ -3,7 +3,7 @@ TARGET = gbcflsh
 DEPENDPATH += .
 INCLUDEPATH += .
 
-QT += widgets
+QT += network widgets
 
 QMAKE_LFLAGS += -static
 
@@ -13,6 +13,7 @@ RESOURCES += qdarkstyle/style.qrc
 HEADERS += src/About.h \
            src/AbstractPort.h \
            src/Console.h \
+           src/USBPortWin.h \
            src/const.h \
            src/EraseThread.h \
            src/Gui.h \
@@ -24,9 +25,7 @@ HEADERS += src/About.h \
            src/WriteRamThread.h \
            src/about.xpm \
            src/ftd2xx.h \
-           src/ftdi.h \
-           src/icon.xpm \
-           src/termios.h
+           src/icon.xpm
 SOURCES += src/About.cpp \
            src/EraseThread.cpp \
            src/gbcflsh.cpp \
@@ -39,17 +38,14 @@ SOURCES += src/About.cpp \
            src/WriteRamThread.cpp
 RC_FILE = src/res.rc
 win32 {
-SOURCES += src/SerialPortWin.cpp \
+SOURCES += \
            src/USBPortWin.cpp
-HEADERS += src/SerialPortWin.h \
-           src/USBPortWin.h
+HEADERS +=
 LIBS += -L"$$PWD/src/lib" -lftd2xx
 }
 unix {
-SOURCES += src/SerialPort.cpp \
-           src/USBPort.cpp
-HEADERS += src/SerialPort.h \
-           src/USBPort.h
+SOURCES +=
+HEADERS +=
 LIBS += -lftdi
 exec.path = /usr/bin
 exec.files = gbcflsh

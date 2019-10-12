@@ -28,11 +28,7 @@ public:
 
   void line ()
   {
-#ifdef Q_OS_UNIX
-    print ("<br>");
-#else
     print ("<hr><br>");
-#endif
   }
 };
 
