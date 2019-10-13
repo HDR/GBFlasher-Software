@@ -272,6 +272,7 @@ Logic::ram_file_size (FILE * file)
     case 2 * 1024:
     case 8 * 1024:
     case 32 * 1024:
+    case 64 * 1024:
     case 128 * 1024:
       return (short) (mem_size / 1024L);
     default:

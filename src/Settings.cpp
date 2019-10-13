@@ -67,7 +67,8 @@ Settings::Settings (QWidget * parent):QGroupBox (tr ("Settings"), parent)
   ram_combo->insertItem (0, "2 KB");
   ram_combo->insertItem (1, "8 KB");
   ram_combo->insertItem (2, "32 KB");
-  ram_combo->insertItem (3, "128 KB");
+  ram_combo->insertItem (3, "64 KB");
+  ram_combo->insertItem (4, "128 KB");
   ram_combo->setCurrentIndex (1);
 
   auto_check = new QCheckBox (tr ("Check file size"), this);
@@ -118,6 +119,9 @@ Settings::setRam (int index)
       ram_size = 32;
       break;
     case 3:
+      ram_size = 64;
+      break;
+    case 4:
       ram_size = 128;
       break;
     }
@@ -131,7 +135,7 @@ Settings::setMbc (int mbc_nr)
   switch (mbc)
     {
     case MBCAUTO:
-      ram_types (4);
+      ram_types (5);
       flash_types (8);
       break;
     case MBC1:
@@ -143,7 +147,7 @@ Settings::setMbc (int mbc_nr)
       flash_types (3);
       break;
     case MBC3:
-      ram_types (3);
+      ram_types (4);
       flash_types (7);
       break;
     case ROMONLY:
@@ -151,7 +155,7 @@ Settings::setMbc (int mbc_nr)
       flash_types (0);
       break;
     case MBC5:
-      ram_types (4);
+      ram_types (5);
       flash_types (8);
       break;
     case RUMBLE:
@@ -184,7 +188,14 @@ Settings::ram_types (int type)
       ram_combo->insertItem (0, "2 KB");
       ram_combo->insertItem (1, "8 KB");
       ram_combo->insertItem (2, "32 KB");
-      ram_combo->insertItem (3, "128 KB");
+      ram_combo->insertItem (3, "64 KB");
+      break;
+    case 5:
+      ram_combo->insertItem (0, "2 KB");
+      ram_combo->insertItem (1, "8 KB");
+      ram_combo->insertItem (2, "32 KB");
+      ram_combo->insertItem (3, "64 KB");
+      ram_combo->insertItem (4, "128 KB");
       break;
     }
 }

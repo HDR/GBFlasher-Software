@@ -484,6 +484,9 @@ Gui::erase_ram (void)
     case 32:
       windowCount = 3;
       break;
+    case 64:
+      windowCount = 8;
+      break;
     case 128:
       windowCount = 15;
       break;

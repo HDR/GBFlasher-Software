@@ -11,7 +11,7 @@ enum cchars
 #define FRAMESIZE 64
 #define AUTOSIZE -1
 #define PORTS_COUNT 4
-#define VER "1.4 (64bit)"
+#define VER "1.4.1 (64bit)"
 
 #define USB 0
 
