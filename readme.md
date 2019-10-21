@@ -3,8 +3,8 @@ Gameboy Cart Flasher Software
 
 Changes
 ---------------------------------
-- Support for 4MB roms on MBC30 chips (Requires https://github.com/MrHDR/GBFlasher-Firmware)
-- 64K ram support for MBC30 based cartridges
+- Support for 4MB roms on MBC30 based cartridges (Requires https://github.com/MrHDR/GBFlasher-Firmware)
+- Support for 64K saves on MBC30 based cartridges
 - Cleaner looking gui
 - Compiled statically so that the software can be launched without downloading or installing anything else
 - Higher baud rate option
