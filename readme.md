@@ -16,3 +16,7 @@ Changes
 - Internal code changes
 - Firmware Download trough software
 - Auto selection of USB devices, no need to manually select a device
+- Rom Patching in software
+- Firmware updating in software
+- Progress is shown in the taskbar
+- High dpi monitor support
