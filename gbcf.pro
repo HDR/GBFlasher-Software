@@ -3,7 +3,7 @@ TARGET = gbcflsh
 DEPENDPATH += .
 INCLUDEPATH += .
 
-QT += network widgets
+QT += network widgets serialport winextras
 
 QMAKE_LFLAGS += -static
 

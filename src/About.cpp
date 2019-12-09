@@ -26,10 +26,12 @@ About::About (QWidget * parent):QDialog (parent)
   labels->addWidget (name);
   copy = new QLabel ("Copyright (c) 2005-2007 Kraku & Chroost", box);
   labels->addWidget (copy);
-  desc1 = new QLabel (tr ("This is a custom version, see <a href=https://github.com/MrHDR/GBFlasher-Software>https://github.com/MrHDR/GBFlasher-Software</a> for more info."),
-		      box);
+  desc1 = new QLabel (tr ("This is a custom version, see <a href=https://github.com/MrHDR/GBFlasher-Software>https://github.com/MrHDR/GBFlasher-Software</a> for more info."),box);
+  desc2 = new QLabel (tr ("Relies on <a href=https://github.com/Alcaro/Flips>Flips</a> and <a href=https://github.com/seedrobotics/tinysafeboot>Tinysafeboot</a>"));
   desc1->setOpenExternalLinks(true);
+  desc2->setOpenExternalLinks(true);
   labels->addWidget (desc1);
+  labels->addWidget (desc2);
   all->addWidget (box);
   ok_btn = new QPushButton (tr ("Close"), this);
   all->addWidget (ok_btn);

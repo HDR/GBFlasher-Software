@@ -5,6 +5,8 @@
 #include <QPushButton>
 #include <QString>
 #include <QNetworkAccessManager>
+#include <QProcess>
+#include <QWinTaskbarButton>
 #include "Settings.h"
 #include "Console.h"
 #include "Logic.h"
@@ -26,6 +28,7 @@ class Gui:public QWidget
   QVBoxLayout *center;
   QHBoxLayout *down;
   QProgressBar *progress;
+  QWinTaskbarButton *winTaskbar;
   QLabel *image;
   QPixmap *logo;
   QPushButton *cancel_btn;
@@ -38,6 +41,8 @@ class Gui:public QWidget
   QPushButton *eram_btn;
   QPushButton *about_btn;
   QPushButton *firmware_btn;
+  QPushButton *patch_btn;
+  QCheckBox *keepfiles_check;
   QString file_name;
   QString path;
   About about_dlg;
@@ -47,6 +52,10 @@ class Gui:public QWidget
   ReadRamThread *thread_RRAM;
   WriteRamThread * thread_WRAM;
   QNetworkAccessManager *manager;
+  QNetworkAccessManager *manager2;
+  QNetworkAccessManager *manager3;
+  QProcess updateProcess;
+  QProcess patchProcess;
 
 public:
     Gui (QWidget * parent = nullptr);
@@ -66,7 +75,15 @@ public:
   void erase_ram (void);
   void about ();
   void firmware ();
-  void download (QNetworkReply *reply);
+  void patcher ();
+  void downloadFirmware (QNetworkReply *reply);
+  void downloadTSB (QNetworkReply *reply);
+  void downloadFlips (QNetworkReply *reply);
   void setProgress (int ile, int max);
+  void processOutput ();
+  void processPatchOut ();
+  void flashFirmware ();
+  void removeTempdir ();
+  void applyPatch ();
   AbstractPort *create_port ();
 };

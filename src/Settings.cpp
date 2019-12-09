@@ -40,7 +40,7 @@ Settings::Settings (QWidget * parent):QGroupBox (tr ("Settings"), parent)
   mbc_combo->insertItem (0, "MBC AUTO");
   mbc_combo->insertItem (1, "MBC1");
   mbc_combo->insertItem (2, "MBC2");
-  mbc_combo->insertItem (3, "MBC3");
+  mbc_combo->insertItem (3, "MBC3/MBC30");
   mbc_combo->insertItem (4, "ROM ONLY");
   mbc_combo->insertItem (5, "MBC5");
   mbc_combo->insertItem (6, "RUMBLE");
@@ -89,11 +89,9 @@ Settings::Settings (QWidget * parent):QGroupBox (tr ("Settings"), parent)
 
 
   connect (mbc_combo, SIGNAL (activated (int)), this, SLOT (setMbc (int)));
-  connect (flash_combo, SIGNAL (activated (int)), this,
-       SLOT (setFlash (int)));
+  connect (flash_combo, SIGNAL (activated (int)), this, SLOT (setFlash (int)));
   connect (ram_combo, SIGNAL (activated (int)), this, SLOT (setRam (int)));
-  connect (auto_check, SIGNAL (stateChanged (int)), this,
-       SLOT (setAuto (int)));
+  connect (auto_check, SIGNAL (stateChanged (int)), this, SLOT (setAuto (int)));
 
 }
 

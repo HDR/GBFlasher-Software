@@ -77,6 +77,8 @@ Q_OBJECT public:
 /* query device for status of itself and cart, fills status_t struct */
   static int read_status (AbstractPort * port, const char *name_portu, char id,
 			  char mbc, char alg, status_t * flasher_stat);
+
+  static int reset_ic (AbstractPort * port, const char *name_portu);
 /* sends start packet generateg from given configuration */
   static bool send_start_packet (AbstractPort * port, config_t cfg);
 

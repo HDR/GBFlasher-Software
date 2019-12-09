@@ -50,7 +50,7 @@ bool USBPortWin::open_port (QString)
 		return false;
 	if(FT_SetTimeouts(ftHandle,5000,0) != FT_OK)
 		return false;
-	return true;/* all ok */
+    return true;/* all ok */
 
   
 }

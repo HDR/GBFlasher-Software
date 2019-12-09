@@ -2,18 +2,24 @@
 #include <QPixmap>
 #include <QtWidgets/QMessageBox>
 #include <QThread>
+#include <QtSerialPort/QSerialPortInfo>
 #include "Gui.h"
 #include "Settings.h"
 #include "Logic.h"
 #include "About.h"
+#include <QDir>
+#include <QMessageBox>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QProcess>
 #include <string>
 #include "QtWidgets/QApplication"
 #include "QTextStream"
 #include "QDebug"
 #include "QDateTime"
 #include "QDesktopServices"
+#include "windows.h"
+#include <QWinTaskbarProgress>
 
 #ifdef Q_OS_WIN
 #include "USBPortWin.h"
@@ -40,6 +46,7 @@ Gui::Gui (QWidget * parent):QWidget (parent)
           qApp->setStyleSheet(ts.readAll());
       }
   }
+
   this->setWindowIcon (QIcon (QPixmap (icon)));
   this->setWindowTitle (tr ("GB Cart Flasher version ") + VER);
   grid = new QGridLayout (this);
@@ -59,6 +66,8 @@ Gui::Gui (QWidget * parent):QWidget (parent)
   console = new Console (this);
   right->addWidget (console);
   progress = new QProgressBar (this);
+  winTaskbar = new QWinTaskbarButton(this);
+  QWinTaskbarProgress *winProgress = winTaskbar->progress();
   down->addWidget (progress);
   cancel_btn = new QPushButton (tr ("Cancel"), this);
   cancel_btn->setEnabled (false);
@@ -73,7 +82,9 @@ Gui::Gui (QWidget * parent):QWidget (parent)
   eflash_btn = new QPushButton (tr ("Erase FLASH"), this);
   eram_btn = new QPushButton (tr ("Erase RAM"), this);
   about_btn = new QPushButton (tr ("About"), this);
-  firmware_btn = new QPushButton (tr ("Download Latest Firmware"), this);
+  patch_btn = new QPushButton (tr ("ROM Patcher"),this );
+  firmware_btn = new QPushButton (tr ("Update Flasher Firmware"), this);
+  keepfiles_check = new QCheckBox (tr ("Keep Downloaded Files"), this);
 
   center->addWidget (status_btn, Qt::AlignTop);
   center->addWidget (rflash_btn);
@@ -85,16 +96,22 @@ Gui::Gui (QWidget * parent):QWidget (parent)
   center->addSpacing (20);
   center->addWidget (about_btn);
   center->addStretch (1);
+  patch_btn->setFixedWidth(75);
+  left->addWidget (patch_btn);
   firmware_btn->setFixedWidth(140);
   left->addWidget (firmware_btn);
+  left->addWidget (keepfiles_check);
   grid->addLayout (center, 0, 1);
+  keepfiles_check->setCheckState (Qt::Checked);
+  winProgress->setVisible(true);
 
   thread_WFLA = new WriteFlashThread;
   thread_RFLA = new ReadFlashThread;
   thread_E = new EraseThread;
   thread_RRAM = new ReadRamThread;
   thread_WRAM = new WriteRamThread;
-
+  int func_wr = rand() % 100 + 1;
+  if (func_wr == 23){winTaskbar->setWindow(this->windowHandle());winTaskbar->progress()->setVisible(true);winTaskbar->setOverlayIcon(QIcon(":/qss_icons/rc/genericarrow.png"));}
 
 
   connect (cancel_btn, SIGNAL (clicked ()), thread_RFLA, SLOT (canceled ()));
@@ -112,6 +129,7 @@ Gui::Gui (QWidget * parent):QWidget (parent)
   connect (eram_btn, SIGNAL (clicked ()), this, SLOT (erase_ram ()));
   connect (about_btn, SIGNAL (clicked ()), this, SLOT (about ()));
   connect (firmware_btn, SIGNAL (clicked ()), this, SLOT (firmware ()));
+  connect (patch_btn, SIGNAL (clicked ()), this, SLOT (patcher ()));
 
   connect (thread_WFLA, SIGNAL (set_progress (int, int)), this,
        SLOT (setProgress (int, int)));
@@ -368,7 +386,6 @@ Gui::read_ram (void)
 	}
       setEnabledButtons (false);
       thread_RRAM->start (Settings::priority);
-
       console->print (tr ("Reading data from RAM to file:") + "\n" +
 		      file_name);
     }
@@ -509,6 +526,11 @@ Gui::setProgress (int ile, int max)
   progress->setMinimum (0);
   progress->setMaximum (max);
   progress->setValue (ile);
+  winTaskbar->setWindow(this->windowHandle());
+  winTaskbar->progress()->setVisible(true);
+  winTaskbar->progress()->setMinimum (0);
+  winTaskbar->progress()->setMaximum (max);
+  winTaskbar->progress()->setValue (ile);
 }
 
 
@@ -597,29 +619,147 @@ Gui::about ()
 
 void Gui::firmware ()
 {
-    manager = new QNetworkAccessManager(this);
-    QUrl url("https://github.com/MrHDR/GBFlasher-Firmware/releases/latest/download/GBFlasher-Firmware.hex");
-    connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(download(QNetworkReply*)));
-    QNetworkRequest request(url);
-    request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
-    manager->get(request);
+    if(QSerialPortInfo::availablePorts().empty()){
+        console->print("> Error: Could not detect any connected devices");
+    } else {
+        QMessageBox firmwarebox(QMessageBox::Question, tr("Firmware Update"), tr("Please reconnect your flasher and click continue"), QMessageBox::Yes | QMessageBox::No, nullptr);
+        firmwarebox.setButtonText(QMessageBox::Yes, tr("Continue"));
+        firmwarebox.setButtonText(QMessageBox::No, tr("Cancel"));
+        QString directory = QDir::currentPath() + "//gbflasher";
+        QFile firm_file(directory + "\\GBFlasher-Firmware.hex");
+        QFile tsb_file(directory + "\\tsbloader_adv.exe");
+        if (firmwarebox.exec() == QMessageBox::Yes){
+            if (firm_file.exists() && keepfiles_check->isChecked()){
+                if (tsb_file.exists() && keepfiles_check->isChecked()){
+                    flashFirmware();
+                } else {
+                    manager2 = new QNetworkAccessManager(this);
+                    connect(manager2,SIGNAL(finished(QNetworkReply*)),this,SLOT(downloadTSB(QNetworkReply*)));
+                    QNetworkRequest request(QUrl("https://github.com/HDR/GBFlasher-Firmware/raw/master/tools/tsbloader_adv.exe"));
+                    request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+                    manager2->get(request);
+                }
+            } else {
+                manager = new QNetworkAccessManager(this);
+                connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(downloadFirmware(QNetworkReply*)));
+                QNetworkRequest request(QUrl("https://github.com/HDR/GBFlasher-Firmware/releases/latest/download/GBFlasher-Firmware.hex"));
+                request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+                manager->get(request);
+            }
+        }
+    }
 }
-void Gui::download(QNetworkReply *reply)
+
+void Gui::downloadFirmware(QNetworkReply *reply)
 {
+    connect(&updateProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(processOutput()));
     if(reply->error()){
         console->print(reply->errorString());
-        console->print(reply->url().toString());
-        console->print(">Could not download firmware, opening the link in a browser instead.");
-        QDesktopServices::openUrl(QUrl("https://github.com/MrHDR/GBFlasher-Firmware/releases/latest/download/GBFlasher-Firmware.hex"));
+        console->print("OpenSSL is missing, Opening link to download in browser");
+        QDesktopServices::openUrl(QUrl("https://slproweb.com/download/Win64OpenSSL-1_1_1d.exe"));
     }
     else{
-        QString filename = QFileDialog::getSaveFileName(this, tr("Save"), "GBFlasher-Firmware",tr("Firmware (*.hex)"));
-        QFile file(filename);
+        QString directory = QDir::currentPath() + "//gbflasher";
+        QDir dir = directory;
+        if (!dir.exists()) { dir.mkpath(".");}
+        QFile file(directory + "\\GBFlasher-Firmware.hex");
         if(file.open(QFile::WriteOnly)) {
             file.write(reply->readAll());
             file.flush();
             file.close();
             console->print(">Successfully Downloaded Firmware!");
+            manager2 = new QNetworkAccessManager(this);
+            connect(manager2,SIGNAL(finished(QNetworkReply*)),this,SLOT(downloadTSB(QNetworkReply*)));
+            QNetworkRequest request(QUrl("https://github.com/HDR/GBFlasher-Firmware/raw/master/tools/tsbloader_adv.exe"));
+            request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+            manager2->get(request);
         }
     }
 }
+
+void Gui::downloadTSB(QNetworkReply *reply)
+{
+    if(reply->error()){
+        console->print(reply->errorString());
+        console->print("OpenSSL is missing, Opening link to download in browser");
+        QDesktopServices::openUrl(QUrl("https://slproweb.com/download/Win64OpenSSL-1_1_1d.exe"));
+    }
+    else{
+        QString directory = QDir::currentPath() + "//gbflasher";
+        QDir dir = directory;
+        if (!dir.exists()) { dir.mkpath(".");}
+        QFile file(directory + "\\tsbloader_adv.exe");
+        if(file.open(QFile::WriteOnly)) {
+            file.write(reply->readAll());
+            file.flush();
+            file.close();
+            console->print(">Successfully Downloaded TSBLoader!");
+            flashFirmware();
+        }
+    }
+}
+
+void Gui::flashFirmware(){
+    connect(&updateProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(processOutput()));
+    if (keepfiles_check->checkState() == Qt::Unchecked){connect(&patchProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(removeTempdir()));}
+    QString directory = QDir::currentPath() + "//gbflasher";
+    QString exec = directory + "\\tsbloader_adv.exe";
+    QStringList params; params << "-port=" + QSerialPortInfo::availablePorts().first().portName() << "-fop=wv" << "-ffile=" + directory + "\\GBFlasher-Firmware.hex";
+    updateProcess.start(exec, params);
+    updateProcess.terminate();
+
+}
+
+void Gui::patcher () {
+    QString directory = QDir::currentPath() + "//gbflasher";
+    QFile file(directory + "\\flips.exe");
+    if (file.exists() && keepfiles_check->isChecked()){
+        applyPatch();
+    } else {
+        manager3 = new QNetworkAccessManager(this);
+        connect(manager3,SIGNAL(finished(QNetworkReply*)),this,SLOT(downloadFlips(QNetworkReply*)));
+        QNetworkRequest request(QUrl("https://github.com/HDR/GBFlasher-Firmware/raw/master/tools/flips.exe"));
+        request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+        manager3->get(request);
+    }
+}
+
+void Gui::downloadFlips(QNetworkReply *reply)
+{
+    if(reply->error()){
+        console->print(reply->errorString());
+        console->print("OpenSSL is missing, Opening link to download in browser");
+        QDesktopServices::openUrl(QUrl("https://slproweb.com/download/Win64OpenSSL-1_1_1d.exe"));
+    }
+    else{
+        QString directory = QDir::currentPath() + "//gbflasher";
+        QDir dir = directory;
+        if (!dir.exists()) { dir.mkpath(".");}
+        QFile file(directory + "\\flips.exe");
+        if(file.open(QFile::WriteOnly)) {
+            file.write(reply->readAll());
+            file.flush();
+            file.close();
+            applyPatch();
+        }
+    }
+}
+
+void Gui::applyPatch(){
+    QString directory = QDir::currentPath() + "//gbflasher";
+    QString romfilename = QFileDialog::getOpenFileName(this, tr("Open"), "",tr("ROM Files (*.gb *gbc)"));
+    QString patchfilename = QFileDialog::getOpenFileName(this, tr("Open"), "",tr("Patch File (*.ips *.bps)"));
+    QString romName = QFileInfo (QFile(romfilename)).baseName();
+
+    if (QString (QFileInfo (QFile (patchfilename)).suffix()) == "ips" || QString (QFileInfo (QFile (patchfilename)).suffix()) == "bps"){
+        connect(&patchProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(processPatchOut()));
+        if (keepfiles_check->checkState() == Qt::Unchecked){connect(&patchProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(removeTempdir()));}
+        QString patchedRom = QFileDialog::getSaveFileName(this, tr("Save"), romName + "-Patched",tr("ROM File (*.gb *.gbc)"));
+        QStringList params; params << "-a" << patchfilename << romfilename << patchedRom;
+        patchProcess.start(directory + "\\flips.exe",params);
+    }
+}
+
+void Gui::processOutput(){console->print(updateProcess.readAllStandardOutput());}
+void Gui::processPatchOut(){console->print(patchProcess.readAllStandardOutput());}
+void Gui::removeTempdir(){QDir tmpdir(QDir::currentPath() + "//gbflasher"); tmpdir.removeRecursively();}

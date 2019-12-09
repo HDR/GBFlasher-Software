@@ -11,14 +11,14 @@ enum cchars
 #define FRAMESIZE 64
 #define AUTOSIZE -1
 #define PORTS_COUNT 4
-#define VER "1.4.1 (64bit)"
+#define VER "1.5 (64bit)"
 
 #define USB 0
 
 /* strings for version information */
 #ifdef Q_OS_WIN
 #define SYSTEM "WINDOWS"
-#define DEVELOPED "GCC 8.2.0 + QT 4.8.7"
+#define DEVELOPED "GCC 8.2.0 + QT 5.13.1"
 #endif
 
 /* return values and errors */
@@ -34,6 +34,7 @@ enum error_t
 #define LAST_DATA 0x02
 #define ERASE 0x03
 #define STATUS 0x04
+#define RESET 0x05
 
 #define RESERVED 0x00
 #define NREAD_ID 0x00
