@@ -10,8 +10,8 @@ enum cchars
 #define PACKETSIZE 72
 #define FRAMESIZE 64
 #define AUTOSIZE -1
-#define PORTS_COUNT 4
-#define VER "1.5 (64bit)"
+#define PORTS_COUNT 1
+#define VER "1.5.1 (64bit)"
 
 #define USB 0
 

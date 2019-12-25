@@ -20,3 +20,4 @@ Changes
 - Firmware updating in software
 - Progress is shown in the taskbar
 - High dpi monitor support
+- Checks for firmware updates automatically

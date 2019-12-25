@@ -51,6 +51,7 @@ class Gui:public QWidget
   EraseThread *thread_E;
   ReadRamThread *thread_RRAM;
   WriteRamThread * thread_WRAM;
+  QNetworkAccessManager *verMan;
   QNetworkAccessManager *manager;
   QNetworkAccessManager *manager2;
   QNetworkAccessManager *manager3;
@@ -74,6 +75,8 @@ public:
   void erase_flash (void);
   void erase_ram (void);
   void about ();
+  void checkVersion ();
+  void VSHandler (QNetworkReply *reply);
   void firmware ();
   void patcher ();
   void downloadFirmware (QNetworkReply *reply);

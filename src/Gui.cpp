@@ -155,6 +155,7 @@ Gui::Gui (QWidget * parent):QWidget (parent)
   console->setTextColor(Qt::white);
 
   console->print (tr ("GB Cart Flasher version ") + VER + tr (" started."));
+  checkVersion();
 }
 
 AbstractPort *
@@ -171,14 +172,11 @@ Gui::startup_info (void)
   if (Settings::commanual == false)
     {
       AbstractPort *port = create_port ();
-      if (Logic::read_status (port, "USB", NREAD_ID, 0x00, 0x00, &status) ==
-	  true)
+      if (Logic::read_status (port, "USB", NREAD_ID, 0x00, 0x00, &status) == true)
 	{
 	  QString tmp;
       console->print (tr ("Device connected via: USB"));
-	  tmp =
-	    tmp.sprintf (" %d%d.%d%d", status.ver_11, status.ver_12,
-                         status.ver_21, status.ver_22);
+      tmp = tmp.sprintf (" %d%d.%d%d", status.ver_11, status.ver_12, status.ver_21, status.ver_22);
 	  console->print (tr ("Device firmware version:") + tmp);
 	  console->line ();
 	  return;
@@ -542,8 +540,6 @@ Gui::setEnabledButtons (bool state)
   wflash_btn->setEnabled (state);
   eflash_btn->setEnabled (state);
   cancel_btn->setEnabled (!state);
-  //this buttons needs to be dissabled 
-  //if no ram is avilable
   if (settings->isRamDisabled ())
     state = false;
   rram_btn->setEnabled (state);
@@ -615,6 +611,27 @@ Gui::about ()
 {
   About about (this);
   about.exec ();
+}
+
+void Gui::checkVersion ()
+{
+    verMan = new QNetworkAccessManager(this);
+    connect(verMan,SIGNAL(finished(QNetworkReply*)),this,SLOT(VSHandler(QNetworkReply*)));
+    QNetworkRequest verReq(QUrl("https://github.com/HDR/GBFlasher-Firmware/releases/latest/"));
+    verReq.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+    verMan->get(verReq);
+}
+
+void Gui::VSHandler (QNetworkReply *reply)
+{
+    status_t status;
+    AbstractPort *port = create_port ();
+    QString tmp;
+    if (Logic::read_status (port, "USB", NREAD_ID, 0x00, 0x00, &status) == true){
+        if (reply->url().toString().right(4) != tmp.sprintf("%d.%d%d", status.ver_12, status.ver_21, status.ver_22)){
+            console->print("A firmware update is available!");
+        }
+    }
 }
 
 void Gui::firmware ()
