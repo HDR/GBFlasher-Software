@@ -11,7 +11,7 @@ enum cchars
 #define FRAMESIZE 64
 #define AUTOSIZE -1
 #define PORTS_COUNT 1
-#define VER "1.5.1 (64bit)"
+#define VER "1.5.2 (64bit)"
 
 #define USB 0
 
@@ -53,9 +53,7 @@ enum error_t
 enum alg_t
 { ALG16 = 0x00, ALG12 = 0x01 };
 enum dap_t
-{ LONGER = 0x00, DEFAULT = 0x01, DATAPOLL = 0x02, TOGGLE = 0x03 };
-enum speed_type
-{ LOW = 0x00, STANDARD = 0x01, HIGH = 0x02, ULTRA = 0x03 };
+{ LONGER = 0x00, DEFAULT = 0x01, DATAPOLL = 0x02, TOGGLE = 0x03 };;
 
 /* MBC types */
 enum mbc_t

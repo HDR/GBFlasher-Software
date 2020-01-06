@@ -24,23 +24,10 @@ bool USBPortWin::open_port (QString)
 {
     if(FT_Open(0,&ftHandle) != FT_OK)
         return false;
-/* choose speed */
-    if(Settings::speed == STANDARD){
-        if(FT_SetBaudRate(ftHandle,185000) != FT_OK)
-           return false;
-    }
-    else if(Settings::speed == LOW){
-        if(FT_SetBaudRate(ftHandle,125000) != FT_OK)
-           return false;
-    }
-    else if(Settings::speed == HIGH){
-        if(FT_SetBaudRate(ftHandle,375000) != FT_OK)
-           return false;
-    }
-    else if(Settings::speed == ULTRA){
-        if(FT_SetBaudRate(ftHandle,1500000) != FT_OK)
-            return false;
-    }
+
+    if(FT_SetBaudRate(ftHandle,375000) != FT_OK)
+       return false;
+
 
 	if(FT_SetLatencyTimer(ftHandle, 2) != FT_OK)
 		return false;

@@ -628,7 +628,7 @@ void Gui::VSHandler (QNetworkReply *reply)
     AbstractPort *port = create_port ();
     QString tmp;
     if (Logic::read_status (port, "USB", NREAD_ID, 0x00, 0x00, &status) == true){
-        if (reply->url().toString().right(4) != tmp.sprintf("%d.%d%d", status.ver_12, status.ver_21, status.ver_22)){
+        if (reply->url().toString().right(4) > tmp.sprintf("%d.%d%d", status.ver_12, status.ver_21, status.ver_22)){
             console->print("A firmware update is available!");
         }
     }

@@ -30,15 +30,6 @@ parse_params (int /*argc*/, char *argv[])
       if (strcmp (*argv, "-showbbl") == 0)
 	Settings::showbbl = true;
 /*
- * USB speed LOW 125000bps, HI 375000, ULTRA 1500000
- */
-      if (strcmp (*argv, "-lowspeed") == 0)
-	Settings::speed = LOW;
-      if (strcmp (*argv, "-highspeed") == 0)
-	Settings::speed = HIGH;
-      if (strcmp (*argv, "-ultraspeed") == 0)
-          Settings::speed = ULTRA;
-/*
  * Appearance settings
  */
       if (strcmp (*argv, "-darkmode") == 0)
