@@ -7,7 +7,7 @@ Changes
 - Support for 64K saves on MBC30 based cartridges
 - Cleaner looking gui
 - Compiled statically so that the software can be launched without downloading or installing anything else
-- Higher baud rate option
+- Higher baud
 - Darkmode
 - New icon
 - No translations
