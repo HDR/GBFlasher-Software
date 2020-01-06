@@ -14,10 +14,9 @@ Changes
 - Upgraded to QT5
 - Upgraded to 64Bit
 - Internal code changes
-- Firmware Download trough software
 - Auto selection of USB devices, no need to manually select a device
 - Rom Patching in software
-- Firmware updating in software
+- Firmware updates trough software
 - Progress is shown in the taskbar
 - High dpi monitor support
 - Checks for firmware updates automatically
