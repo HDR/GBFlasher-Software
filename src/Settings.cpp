@@ -15,6 +15,8 @@ dap_t
   Settings::dap = TOGGLE;
 bool
   Settings::showbbl = 0;
+speed_type
+  Settings::speed = STANDARD;
 bool
   Settings::darkmode = 0;
 QThread::Priority Settings::priority = QThread::NormalPriority;

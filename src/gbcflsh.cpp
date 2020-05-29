@@ -29,6 +29,10 @@ parse_params (int /*argc*/, char *argv[])
 	Settings::dap = DATAPOLL;
       if (strcmp (*argv, "-showbbl") == 0)
 	Settings::showbbl = true;
+      if (strcmp (*argv, "-lowspeed") == 0)
+    Settings::speed = LOW;
+      if (strcmp (*argv, "-highspeed") == 0)
+    Settings::speed = HIGH;
 /*
  * Appearance settings
  */

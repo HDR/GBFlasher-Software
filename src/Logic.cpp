@@ -88,42 +88,6 @@ Logic::Logic (QObject * parent):QObject (parent)
 }
 
 int
-Logic::reset_ic (AbstractPort * port, const char *port_name)
-{
-    assert (port != nullptr);
-    if (port->open_port (port_name) == false)
-        return PORT_ERROR;
-
-    unsigned short crc16;
-    unsigned char packet[PACKETSIZE];
-    memset (packet, 0x00, PACKETSIZE);
-    packet[0] = DATA;
-    packet[1] = RESET;
-    crc16 = generate_crc16 (packet);
-    packet[PACKETSIZE - 2] = crc16 / 256;
-    packet[PACKETSIZE - 1] = crc16 % 256;
-    if (port->send_packet (packet) < PACKETSIZE)
-      {
-        port->close_port ();
-        return SEND_ERROR;
-      }
-    else
-      {
-        if (port->receive_packet (packet) == DATA)
-      {
-        port->close_port ();
-        return true;
-      }
-        else
-      {
-        port->close_port ();
-        return false;
-      }
-      }
-}
-
-
-int
 Logic::read_status (AbstractPort * port, const char *port_name, char id, char mbc,
 		    char algorythm, status_t * flasher_stat)
 {

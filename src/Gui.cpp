@@ -673,7 +673,7 @@ void Gui::downloadFirmware(QNetworkReply *reply)
     if(reply->error()){
         console->print(reply->errorString());
         console->print("OpenSSL is missing, Opening link to download in browser");
-        QDesktopServices::openUrl(QUrl("https://slproweb.com/download/Win64OpenSSL-1_1_1d.exe"));
+        QDesktopServices::openUrl(QUrl("https://github.com/HDR/GBFlasher-Software/releases/download/1.5.1/Win64OpenSSL-1_1_1d.exe"));
     }
     else{
         QString directory = QDir::currentPath() + "//gbflasher";
